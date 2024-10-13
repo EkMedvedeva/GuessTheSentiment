@@ -1,5 +1,19 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
+import random
+
+
+class ReviewLoader:
+
+    def __init__(self):
+        with open('../reviews/mattress/data.json', 'r') as file:
+            mattress_data = json.loads(file.read())
+        
+        self.product = mattress_data['product']
+        self.reviews = mattress_data['reviews']
+
+    def get_random_review(self):
+        return random.choice(self.reviews)
 
 
 class InvalidRequestData(Exception):
@@ -63,10 +77,14 @@ class MyRequestHandler(BaseHTTPRequestHandler):
                 self._send_js(data)
                     
             elif self.path == '/review':
+                review = review_loader.get_random_review()
+                review_rating = review['rating']
+                review_title = review['title']
+                review_text = review['review']
                 data = {
-                    'product': 'Shampoo',
-                    'product_description': 'Roslin shampoo offers gentle care for all hair types and the scalp, thanks to its neutral pH 5.5, making it perfect for daily use.',
-                    'review': '"Large volume, colorless, thick, pleasant smell. Doesn’t lather very well, you need to use a bit more for washing hair. Tried it out, had a different one before. I think it lathers poorly, you need to use a bit more. The smell is nice, not sharp, pleasant, lasts about five hours. Rinses well, thick. The neck under the cap is sealed with foil. Colorless. Worth buying."'
+                    'product': review_loader.product['name'],
+                    'product_description': review_loader.product['description'],
+                    'review': f'Rating: {review_rating}/5\nTitle: {review_title}\nComment: {review_text}'
                 }
                 self._send_json(data)
                 
@@ -101,6 +119,9 @@ class MyRequestHandler(BaseHTTPRequestHandler):
         
 
 if __name__ == '__main__':
+
+    review_loader = ReviewLoader()
+    
     port = 8080
     server_address = ('', port)
     httpd = HTTPServer(server_address, MyRequestHandler)
