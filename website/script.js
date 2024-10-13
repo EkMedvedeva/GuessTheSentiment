@@ -6,6 +6,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const review = document.getElementById('review');
     const ratingSlider = document.getElementById('rating');
     const sliderValue = document.getElementById('slider-value');
+    
+    const adminCheckButton = document.getElementById('admin-check-button');
+    const adminDeployButton = document.getElementById('admin-deploy-button');
 
     let counter = 1;
 
@@ -50,6 +53,38 @@ document.addEventListener('DOMContentLoaded', () => {
     
     ratingSlider.addEventListener('input', () => {
         sliderValue.textContent = ratingSlider.value;
+    });
+    
+    adminCheckButton.addEventListener('click', () => {
+        fetch('/admin/check-update')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('GET request failed');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log(data);
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    });
+    
+    adminDeployButton.addEventListener('click', () => {
+        fetch('/admin/deploy-update')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('GET request failed');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log(data);
+            })
+            .catch(error => {
+                console.error(error);
+            });
     });
     
 });

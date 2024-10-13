@@ -1,12 +1,13 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
 import random
+import subprocess
 
 
 class ReviewLoader:
 
     def __init__(self):
-        with open('../reviews/mattress/data.json', 'r') as file:
+        with open('reviews/mattress/data.json', 'r') as file:
             mattress_data = json.loads(file.read())
         
         self.product = mattress_data['product']
@@ -47,7 +48,7 @@ class MyRequestHandler(BaseHTTPRequestHandler):
     def _send_error(self, data):
         encoded_data = json.dumps(data).encode()
         self._send_response('application/json', encoded_data, code=400)
-
+    
     def _receive_json(self):
         content_length = int(self.headers['Content-Length'])
         encoded_data = self.rfile.read(content_length)
@@ -58,24 +59,24 @@ class MyRequestHandler(BaseHTTPRequestHandler):
         return data
     
     def do_GET(self):
-
+        
         try:
             
             if self.path == '/':
-                with open('home.html', 'rb') as file:
+                with open('website/home.html', 'rb') as file:
                     data = file.read()
                 self._send_html(data)
-                    
+            
             elif self.path == '/style.css':
-                with open('style.css', 'rb') as file:
+                with open('website/style.css', 'rb') as file:
                     data = file.read()
                 self._send_css(data)
-                    
+            
             elif self.path == '/script.js':
-                with open('script.js', 'rb') as file:
+                with open('website/script.js', 'rb') as file:
                     data = file.read()
                 self._send_js(data)
-                    
+            
             elif self.path == '/review':
                 review = review_loader.get_random_review()
                 review_rating = review['rating']
@@ -87,7 +88,30 @@ class MyRequestHandler(BaseHTTPRequestHandler):
                     'review': f'Rating: {review_rating}/5\nTitle: {review_title}\nComment: {review_text}'
                 }
                 self._send_json(data)
+            
+            elif self.path == '/admin/check-update':
+                data = []
                 
+                command = ['git', 'remote', 'update']
+                process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                output, error = process.communicate(timeout=5)
+                data.append({
+                    'command': command,
+                    'output': output.decode('utf-8', errors='ignore'),
+                    'error': error.decode('utf-8', errors='ignore')
+                })
+                
+                command = ['git', 'status', '-uno']
+                process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                output, error = process.communicate(timeout=5)
+                data.append({
+                    'command': command,
+                    'output': output.decode('utf-8', errors='ignore'),
+                    'error': error.decode('utf-8', errors='ignore')
+                })
+                
+                self._send_json(data)
+            
         except InvalidRequestData as e:
             data = {'error': f'Invalid request data: {e}'}
             self._send_error(data)
