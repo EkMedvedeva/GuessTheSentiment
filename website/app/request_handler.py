@@ -1,4 +1,4 @@
-from http.server import BaseHTTPRequestHandler, HTTPServer
+from http.server import BaseHTTPRequestHandler
 import json
 import random
 import subprocess
@@ -63,17 +63,17 @@ class MyRequestHandler(BaseHTTPRequestHandler):
         try:
             
             if self.path == '/':
-                with open('website/home.html', 'rb') as file:
+                with open('website/static/home.html', 'rb') as file:
                     data = file.read()
                 self._send_html(data)
             
             elif self.path == '/style.css':
-                with open('website/style.css', 'rb') as file:
+                with open('website/static/style.css', 'rb') as file:
                     data = file.read()
                 self._send_css(data)
             
             elif self.path == '/script.js':
-                with open('website/script.js', 'rb') as file:
+                with open('website/static/script.js', 'rb') as file:
                     data = file.read()
                 self._send_js(data)
             
@@ -112,6 +112,11 @@ class MyRequestHandler(BaseHTTPRequestHandler):
                 
                 self._send_json(data)
             
+            elif self.path == '/admin/deploy-update':
+                self.server.deploy_needed = True
+                self._send_json({})
+                
+            
         except InvalidRequestData as e:
             data = {'error': f'Invalid request data: {e}'}
             self._send_error(data)
@@ -140,14 +145,7 @@ class MyRequestHandler(BaseHTTPRequestHandler):
         except InternalError as e:
             data = {'error': 'Internal server error'}
             self._send_error(data)
-        
 
-if __name__ == '__main__':
 
-    review_loader = ReviewLoader()
-    
-    port = 8080
-    server_address = ('', port)
-    httpd = HTTPServer(server_address, MyRequestHandler)
-    print(f'Server running on port {port}...')
-    httpd.serve_forever()
+review_loader = ReviewLoader()
+
