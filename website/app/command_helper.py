@@ -1,12 +1,14 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, asdict
 import subprocess
 
 
 @dataclass
 class CommandResult:
-    command
-    output
-    error
+    command: list[str]
+    output: str
+    error: str
+
+    asdict = asdict
 
 
 def command_run(command, timeout=5, cwd=None):
