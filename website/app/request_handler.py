@@ -1,7 +1,7 @@
 from http.server import BaseHTTPRequestHandler
 import json
 import random
-import subprocess
+import command_helper
 
 
 class ReviewLoader:
@@ -93,28 +93,24 @@ class MyRequestHandler(BaseHTTPRequestHandler):
                 data = []
                 
                 command = ['git', 'remote', 'update']
-                process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-                output, error = process.communicate(timeout=5)
-                data.append({
-                    'command': command,
-                    'output': output.decode('utf-8', errors='ignore'),
-                    'error': error.decode('utf-8', errors='ignore')
-                })
+                command_result = command_helper.command_run(command, cwd='../source')
+                data.append(command_result.asdict())
                 
                 command = ['git', 'status', '-uno']
-                process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-                output, error = process.communicate(timeout=5)
-                data.append({
-                    'command': command,
-                    'output': output.decode('utf-8', errors='ignore'),
-                    'error': error.decode('utf-8', errors='ignore')
-                })
+                command_result = command_helper.command_run(command, cwd='../source')
+                data.append(command_result.asdict())
                 
                 self._send_json(data)
             
             elif self.path == '/admin/deploy-update':
+                data = []
+                
+                command = ['git', 'pull']
+                command_result = command_helper.command_run(command, cwd='../source')
+                data.append(command_result.asdict())
+                
+                self._send_json(data)
                 self.server.deploy_needed = True
-                self._send_json({})
                 
             
         except InvalidRequestData as e:
