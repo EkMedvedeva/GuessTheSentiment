@@ -71,20 +71,23 @@ document.addEventListener('DOMContentLoaded', () => {
             });
     });
     
-    adminDeployButton.addEventListener('click', () => {
-        fetch('/admin/deploy-update')
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('GET request failed');
-                }
-                return response.json();
-            })
-            .then(data => {
-                console.log(data);
-            })
-            .catch(error => {
-                console.error(error);
-            });
+    adminDeployButton.addEventListener('click', async () => {
+        const response = await fetch('/admin/deploy-update');
+        if (!response.ok) {
+            console.error(Error('GET request failed'));
+            return;
+        }
+        const reader = response.body.getReader();
+        const decoder = new TextDecoder();
+        while (true) {
+            const result = await reader.read();
+            if (result.done) {
+                break;
+            }
+            const text = decoder.decode(result.value);
+            const data = JSON.parse(text);
+            console.log(data);
+        }
     });
     
 });

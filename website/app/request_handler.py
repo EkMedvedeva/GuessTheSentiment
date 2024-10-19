@@ -2,6 +2,7 @@ from http.server import BaseHTTPRequestHandler
 import json
 import random
 import command_helper
+import time
 
 
 class ReviewLoader:
@@ -44,6 +45,20 @@ class MyRequestHandler(BaseHTTPRequestHandler):
     def _send_json(self, data):
         encoded_data = json.dumps(data).encode()
         self._send_response('application/json', encoded_data)
+
+    def _send_chunked_json(self, data, first=False):
+        if first:
+            self.send_response(200)
+            self.send_header('Content-type', 'application/json')
+            self.send_header('Transfer-Encoding', 'chunked')
+            self.end_headers()
+        if data is None:
+            encoded_data = b''
+        else:
+            encoded_data = json.dumps(data).encode()
+        chunk_data = b'%X\r\n%s\r\n' % (len(encoded_data), encoded_data)
+        self.wfile.write(chunk_data)
+        self.wfile.flush()
 
     def _send_error(self, data):
         encoded_data = json.dumps(data).encode()
@@ -103,13 +118,17 @@ class MyRequestHandler(BaseHTTPRequestHandler):
                 self._send_json(data)
             
             elif self.path == '/admin/deploy-update':
-                data = []
-                
                 command = ['git', 'pull']
                 command_result = command_helper.command_run(command, cwd='../source')
-                data.append(command_result.asdict())
+
+                data = command_result.asdict()
+                self._send_chunked_json(data, first=True)
+
+                for i in range(10):
+                    time.sleep(2)
+                    self._send_chunked_json({'test': str(i)})
                 
-                self._send_json(data)
+                self._send_chunked_json(None)
                 self.server.deploy_needed = True
                 
             
