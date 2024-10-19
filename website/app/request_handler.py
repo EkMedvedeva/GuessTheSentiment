@@ -1,4 +1,4 @@
-from http.server import BaseHTTPRequestHandler
+from base_request_handler import MyBaseRequestHandler, InvalidRequestData, InternalError
 import json
 import random
 import command_helper
@@ -18,148 +18,77 @@ class ReviewLoader:
         return random.choice(self.reviews)
 
 
-class InvalidRequestData(Exception):
-    pass
-
-class InternalError(Exception):
-    pass
-
-
-class MyRequestHandler(BaseHTTPRequestHandler):
-
-    def _send_response(self, content_type, data, code=200):
-        self.send_response(code)
-        self.send_header('Content-type', content_type)
-        self.end_headers()
-        self.wfile.write(data)
-
-    def _send_html(self, data):
-        self._send_response('text/html', data)
-
-    def _send_css(self, data):
-        self._send_response('text/css', data)
-
-    def _send_js(self, data):
-        self._send_response('application/javascript', data)
-
-    def _send_json(self, data):
-        encoded_data = json.dumps(data).encode()
-        self._send_response('application/json', encoded_data)
-
-    def _send_chunked_json(self, data, first=False):
-        if first:
-            self.send_response(200)
-            self.send_header('Content-type', 'application/json')
-            self.send_header('Transfer-Encoding', 'chunked')
-            self.end_headers()
-        if data is None:
-            encoded_data = b''
-        else:
-            encoded_data = json.dumps(data).encode()
-        chunk_data = b'%X\r\n%s\r\n' % (len(encoded_data), encoded_data)
-        self.wfile.write(chunk_data)
-        self.wfile.flush()
-
-    def _send_error(self, data):
-        encoded_data = json.dumps(data).encode()
-        self._send_response('application/json', encoded_data, code=400)
+class MyRequestHandler(MyBaseRequestHandler):
     
-    def _receive_json(self):
-        content_length = int(self.headers['Content-Length'])
-        encoded_data = self.rfile.read(content_length)
-        try:
-            data = json.loads(encoded_data)
-        except json.JSONDecodeError:
-            raise InvalidRequestData('Invalid JSON')
-        return data
-    
-    def do_GET(self):
+    def request_handle(self, full_path):
         
-        try:
+        if full_path == ('GET', '/'):
+            with open('website/static/home.html', 'rb') as file:
+                data = file.read()
+            self._send_html(data)
+        
+        elif full_path == ('GET', '/style.css'):
+            with open('website/static/style.css', 'rb') as file:
+                data = file.read()
+            self._send_css(data)
+        
+        elif full_path == ('GET', '/script.js'):
+            with open('website/static/script.js', 'rb') as file:
+                data = file.read()
+            self._send_js(data)
+        
+        elif full_path == ('GET', '/review'):
+            review = review_loader.get_random_review()
+            review_rating = review['rating']
+            review_title = review['title']
+            review_text = review['review']
+            data = {
+                'product': review_loader.product['name'],
+                'product_description': review_loader.product['description'],
+                'review': f'Rating: {review_rating}/5\nTitle: {review_title}\nComment: {review_text}'
+            }
+            self._send_json(data)
+        
+        elif full_path == ('GET', '/admin/check-update'):
+            data = []
             
-            if self.path == '/':
-                with open('website/static/home.html', 'rb') as file:
-                    data = file.read()
-                self._send_html(data)
+            command = ['git', 'remote', 'update']
+            command_result = command_helper.command_run(command, cwd='../source')
+            data.append(command_result.asdict())
             
-            elif self.path == '/style.css':
-                with open('website/static/style.css', 'rb') as file:
-                    data = file.read()
-                self._send_css(data)
+            command = ['git', 'status', '-uno']
+            command_result = command_helper.command_run(command, cwd='../source')
+            data.append(command_result.asdict())
             
-            elif self.path == '/script.js':
-                with open('website/static/script.js', 'rb') as file:
-                    data = file.read()
-                self._send_js(data)
+            self._send_json(data)
+        
+        elif full_path == ('GET', '/admin/deploy-update'):
+            command = ['git', 'pull']
+            command_result = command_helper.command_run(command, cwd='../source')
+            data = command_result.asdict()
+            self._send_chunked_json(data, first=True)
             
-            elif self.path == '/review':
-                review = review_loader.get_random_review()
-                review_rating = review['rating']
-                review_title = review['title']
-                review_text = review['review']
-                data = {
-                    'product': review_loader.product['name'],
-                    'product_description': review_loader.product['description'],
-                    'review': f'Rating: {review_rating}/5\nTitle: {review_title}\nComment: {review_text}'
-                }
-                self._send_json(data)
+            self.server.deployment_start()
             
-            elif self.path == '/admin/check-update':
-                data = []
-                
-                command = ['git', 'remote', 'update']
-                command_result = command_helper.command_run(command, cwd='../source')
-                data.append(command_result.asdict())
-                
-                command = ['git', 'status', '-uno']
-                command_result = command_helper.command_run(command, cwd='../source')
-                data.append(command_result.asdict())
-                
-                self._send_json(data)
-            
-            elif self.path == '/admin/deploy-update':
-                command = ['git', 'pull']
-                command_result = command_helper.command_run(command, cwd='../source')
+            command = ['python3', 'deployment/deployment_manager.py']
+            command_result = command_helper.command_run(command, timeout=60, cwd='../source')
+            data = command_result.asdict()
+            self._send_chunked_json(data)
 
-                data = command_result.asdict()
-                self._send_chunked_json(data, first=True)
-
-                for i in range(10):
-                    time.sleep(2)
-                    self._send_chunked_json({'test': str(i)})
-                
-                self._send_chunked_json(None)
-                self.server.deploy_needed = True
-                
+            for i in range(10):
+                time.sleep(2)
+                self._send_chunked_json({'test': str(i)})
             
-        except InvalidRequestData as e:
-            data = {'error': f'Invalid request data: {e}'}
-            self._send_error(data)
+            self._send_chunked_json(None)
+            self.server.deployment_finalize()
 
-        except InternalError as e:
-            data = {'error': 'Internal server error'}
-            self._send_error(data)
-    
-    
-    def do_PUT(self):
-
-        try:
-            
-            if self.path == '/rate':
-                data = self._receive_json()
-                try:
-                    rating = int(data['rating'])
-                except Exception as e:
-                    raise InvalidRequestData('rating needs to be an integer')
-                self._send_json({})
-                
-        except InvalidRequestData as e:
-            data = {'error': f'Invalid request data: {e}'}
-            self._send_error(data)
-
-        except InternalError as e:
-            data = {'error': 'Internal server error'}
-            self._send_error(data)
+        elif full_path == ('PUT', '/rate'):
+            data = self._receive_json()
+            try:
+                rating = int(data['rating'])
+            except Exception as e:
+                raise InvalidRequestData('rating needs to be an integer')
+            self._send_json({})
 
 
 review_loader = ReviewLoader()
