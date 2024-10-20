@@ -1,4 +1,4 @@
-from http.server import HTTPServer
+from http.server import ThreadingHTTPServer
 from base_request_handler import MyBaseRequestHandler, InvalidRequestData, InternalError
 import importlib
 import command_helper
@@ -18,11 +18,11 @@ class DeploymentRequestHandler(MyBaseRequestHandler):
             self._send_error(data, HTTPStatus.SERVICE_UNAVAILABLE)
 
 
-class MyHTTPServer(HTTPServer):
+class MyHTTPServer(ThreadingHTTPServer):
 
     def __init__(self, server_address):
         self.request_handler_module = importlib.import_module('request_handler')
-        HTTPServer.__init__(self, server_address, self.request_handler_module.MyRequestHandler)
+        ThreadingHTTPServer.__init__(self, server_address, self.request_handler_module.MyRequestHandler)
 
     def deployment_start(self):
         self.RequestHandlerClass = DeploymentRequestHandler
