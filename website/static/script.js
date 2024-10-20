@@ -79,14 +79,19 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         const reader = response.body.getReader();
         const decoder = new TextDecoder();
+        let buffer = '';
         while (true) {
             const result = await reader.read();
             if (result.done) {
                 break;
             }
-            const text = decoder.decode(result.value);
-            const data = JSON.parse(text);
-            console.log(data);
+            buffer += decoder.decode(result.value);
+            const parts = buffer.split('\n');
+            for (let i = 0; i < parts.length - 1; i++) {
+                const data = JSON.parse(parts[i]);
+                console.log(data);
+            }
+            buffer = parts[parts.length - 1];
         }
     });
     

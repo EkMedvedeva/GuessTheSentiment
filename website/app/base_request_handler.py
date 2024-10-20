@@ -40,7 +40,7 @@ class MyBaseRequestHandler(BaseHTTPRequestHandler):
         if data is None:
             encoded_data = b''
         else:
-            encoded_data = json.dumps(data).encode()
+            encoded_data = json.dumps(data).encode() + b'\n'
         chunk_data = b'%X\r\n%s\r\n' % (len(encoded_data), encoded_data)
         self.wfile.write(chunk_data)
         self.wfile.flush()
