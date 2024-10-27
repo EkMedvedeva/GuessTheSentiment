@@ -5,16 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Guess The Sentiment</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap">
     <script src="script.js" defer></script>
 </head>
 <body>
-    <h1>Welcome to Guess The Sentiment</h1>
-    <p>Test your sentiment analysis skill by sending requests to the server!</p>
+    <h1 id="welcome-message">Welcome to <span class="title">Guess The Sentiment</span></h1>
+    <p id="small-welcome-message">Test your intuition by guessing the sentiment scores of real user reviews!</p>
     <br>
-    <button id="rules-button">Rules</button>
-    <button id="play-button">Play!</button>
-    <button id="admin-check-button">(Admin) Check for updates</button>
-    <button id="admin-deploy-button">(Admin) Deploy update</button>
+    <button id="rules-button" class="button rules-button">Rules</button>
+    <button id="play-button" class="button play-button">Play!</button>
+    <button id="admin-check-button" class="button">(Admin) Check for updates</button>
+    <button id="admin-deploy-button" class="button">(Admin) Deploy update</button>
     <div id="review-container">
         <h2 id="product"></h2>
         <h3>Description of the product:</h3>
@@ -25,7 +26,7 @@
         <div id="slider-label">
         Selected value: <span id="slider-value">1</span>
         </div>
-        <button id="rate-button">Rate!</button>
+        <button id="rate-button" class="button">Rate!</button>
     </div>
 </body>
 </html>

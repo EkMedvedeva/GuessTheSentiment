@@ -1,18 +1,73 @@
+:root {
+    --primary-purple: rgb(23, 19, 74);
+    --secondary-purple: rgb(62, 59, 105);
+    --primary-blue: rgb(51, 23, 201);
+    --play-button-blue: rgb(58, 48, 186);
+    --play-button-hover-blue: rgb(28, 18, 136);
+    --rules-button-orange: rgb(255, 169, 55);
+    --rules-button-hover-orange: rgb(225, 139, 25);
+}
+
 body {
-    font-family: Arial, sans-serif;
+    background-color: rgb(255, 249, 243);
+    font-family: 'Noto Sans', sans-serif;
     text-align: center;
     margin-top: 50px;
 }
 
-button {
-    margin: 20px;
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
+input, textarea, button {
+    font-family: inherit;
 }
 
-#output {
-    margin-top: 20px;
-    font-size: 18px;
-    color: green;
+h1 {
+    font-size: 3em;
+    font-weight: bold;
+    text-align: center;
+    color: var(--primary-purple);
+    margin-bottom: 0.27em;
 }
+
+p {
+    font-size: 1.51em;
+    font-weight: normal;
+    text-align: center;
+    color: var(--secondary-purple);
+    margin: 0.5em;
+}
+
+.title {
+    color: var(--primary-blue);
+}
+
+.button {
+    background-color: rgb(0, 0, 0);
+    color: white;
+    padding: 1.05em 3.33em;
+    border: none;
+    border-radius: 9px;
+    cursor: pointer;
+    font-size: 1.5em;
+    margin: 1.25em;
+    transition: background-color 0.3s ease;
+}
+
+#welcome-message {
+    margin-top: 3em;
+}
+
+.rules-button {
+    background-color: var(--rules-button-orange);
+}
+
+.play-button {
+    background-color: var(--play-button-blue);
+}
+
+.rules-button:hover {
+    background-color: var(--rules-button-hover-orange);
+}
+
+.play-button:hover {
+    background-color: var(--play-button-hover-blue);
+}
+
