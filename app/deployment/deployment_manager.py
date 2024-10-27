@@ -4,8 +4,8 @@ import zipfile
 import json
 import time
 from datetime import datetime, timezone
-import deployment_helper
-import deployment_scripts
+
+from deployment import deployment_helper, deployment_scripts
 
 
 class DeploymentManager:
@@ -54,8 +54,8 @@ class DeploymentManager:
     
     def overwrite(self):
         print('Overwriting source to current...')
-        untouched_files = {os.path.normpath('website/app/server.py')}
-        folders = ('website', 'reviews')
+        
+        folders = ('app', 'website', 'reviews')
         for folder in folders:
             source_path = deployment_helper.path_join(deployment_helper.SOURCE_PATH, folder)
             current_path = deployment_helper.path_join(deployment_helper.CURRENT_PATH, folder)
@@ -65,11 +65,13 @@ class DeploymentManager:
             all_files = source_files | current_files
             
             for file in all_files:
+                if file.relative_path.startswith('deployment'):
+                    continue
+                if '__pycache__' in file.relative_path:
+                    continue
+                
                 source_file_path = deployment_helper.path_join(source_path, file.relative_path)
                 current_file_path = deployment_helper.path_join(current_path, file.relative_path)
-                
-                if source_file_path in untouched_files and file in current_files:
-                    continue
                 
                 if file in source_files:
                     deployment_helper.create_folder_for_file(current_file_path)
@@ -116,5 +118,5 @@ class DeploymentManager:
             file.write(text)
 
 
-deployment_manager = DeploymentManager()
-
+def run():
+    deployment_manager = DeploymentManager()

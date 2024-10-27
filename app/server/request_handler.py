@@ -1,8 +1,9 @@
-from base_request_handler import MyBaseRequestHandler, InvalidRequestData, InternalError
 import json
 import random
-import command_helper
 import time
+
+from server.base_request_handler import MyBaseRequestHandler, InvalidRequestData, InternalError
+from helpers import command_helper
 
 
 class ReviewLoader:
@@ -70,7 +71,7 @@ class MyRequestHandler(MyBaseRequestHandler):
             
             self.server.deployment_start()
             
-            command = ['python3', 'deployment/deployment_manager.py']
+            command = ['python3', 'app/main.py', 'deploy']
             command_result = command_helper.command_run(command, timeout=60, cwd='../source')
             data = command_result.asdict()
             self._send_chunked_json(data)

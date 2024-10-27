@@ -1,8 +1,9 @@
 from http.server import ThreadingHTTPServer
 from http import HTTPStatus
-from base_request_handler import MyBaseRequestHandler, InvalidRequestData, InternalError
 import importlib
-import command_helper
+
+from server.base_request_handler import MyBaseRequestHandler, InvalidRequestData, InternalError
+from helpers import command_helper
 
 
 class DeploymentRequestHandler(MyBaseRequestHandler):
@@ -22,7 +23,7 @@ class DeploymentRequestHandler(MyBaseRequestHandler):
 class MyHTTPServer(ThreadingHTTPServer):
 
     def __init__(self, server_address):
-        self.request_handler_module = importlib.import_module('request_handler')
+        self.request_handler_module = importlib.import_module('server.request_handler')
         ThreadingHTTPServer.__init__(self, server_address, self.request_handler_module.MyRequestHandler)
 
     def deployment_start(self):
@@ -33,9 +34,10 @@ class MyHTTPServer(ThreadingHTTPServer):
         self.RequestHandlerClass = self.request_handler_module.MyRequestHandler
 
 
-port = 8080
-server_address = ('', port)
-httpd = MyHTTPServer(server_address)
-print(f'Server running on port {port}...')
-httpd.serve_forever()
+def run():
+    port = 8080
+    server_address = ('', port)
+    httpd = MyHTTPServer(server_address)
+    print(f'Server running on port {port}...')
+    httpd.serve_forever()
 

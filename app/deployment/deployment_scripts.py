@@ -5,7 +5,8 @@ import os
 import json
 import logging
 from io import StringIO
-import deployment_helper
+
+from deployment import deployment_helper
 
 
 log_stream = StringIO()
