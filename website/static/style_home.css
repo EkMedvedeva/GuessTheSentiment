@@ -1,0 +1,20 @@
+#title-message {
+    margin-top: 3em;
+}
+
+.rules-button {
+    background-color: var(--rules-button-orange);
+}
+
+.play-button {
+    background-color: var(--play-button-blue);
+}
+
+.rules-button:hover {
+    background-color: var(--rules-button-hover-orange);
+}
+
+.play-button:hover {
+    background-color: var(--play-button-hover-blue);
+}
+

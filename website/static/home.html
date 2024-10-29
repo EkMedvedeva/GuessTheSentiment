@@ -4,16 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Guess The Sentiment</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style_base.css">
+    <link rel="stylesheet" href="style_home.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap">
     <script src="script.js" defer></script>
 </head>
-<body>
-    <h1 id="welcome-message">Welcome to <span class="title">Guess The Sentiment</span></h1>
-    <p id="small-welcome-message">Test your intuition by guessing the sentiment scores of real user reviews!</p>
+<body class="orange">
+    <h1 id="title-message">Welcome to <span class="title-game">Guess The Sentiment</span></h1>
+    <p id="subtitle-message">Test your intuition by guessing the sentiment scores of real user reviews!</p>
     <br>
-    <button id="rules-button" class="button rules-button">Rules</button>
-    <button id="play-button" class="button play-button">Play!</button>
+    <a id="rules-button" href="/rules" class="button rules-button">Rules</a>
+    <a id="play-button" class="button play-button">Play!</a>
     <button id="admin-check-button" class="button">(Admin) Check for updates</button>
     <button id="admin-deploy-button" class="button">(Admin) Deploy update</button>
     <div id="review-container">
