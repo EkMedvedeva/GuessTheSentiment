@@ -33,6 +33,11 @@ class MyRequestHandler(MyBaseRequestHandler):
                 data = file.read()
             self._send_html(data)
         
+        elif full_path == ('GET', '/products'):
+            with open('website/static/products.html', 'rb') as file:
+                data = file.read()
+            self._send_html(data)
+        
         elif full_path == ('GET', '/style_base.css'):
             with open('website/static/style_base.css', 'rb') as file:
                 data = file.read()
@@ -45,6 +50,11 @@ class MyRequestHandler(MyBaseRequestHandler):
         
         elif full_path == ('GET', '/style_rules.css'):
             with open('website/static/style_rules.css', 'rb') as file:
+                data = file.read()
+            self._send_css(data)
+        
+        elif full_path == ('GET', '/style_products.css'):
+            with open('website/static/style_products.css', 'rb') as file:
                 data = file.read()
             self._send_css(data)
         

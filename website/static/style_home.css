@@ -2,19 +2,19 @@
     margin-top: 3em;
 }
 
-.rules-button {
+#rules-button {
     background-color: var(--rules-button-orange);
 }
 
-.play-button {
+#play-button {
     background-color: var(--play-button-blue);
 }
 
-.rules-button:hover {
+#rules-button:hover {
     background-color: var(--rules-button-hover-orange);
 }
 
-.play-button:hover {
+#play-button:hover {
     background-color: var(--play-button-hover-blue);
 }
 

@@ -1,0 +1,96 @@
+
+#title-container {
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 1.1em 3em;
+    z-index: 100;
+}
+
+#title-message {
+    font-size: 2.6em;
+    color: var(--primary-blue);
+    margin: 0em;
+}
+
+#buttons-container .button {
+    padding: 0.5em 1.5em;
+    margin: 0.75em;
+}
+
+#back-button {
+    background-color: var(--back-button-pink);
+}
+
+#back-button:hover {
+    background-color: var(--back-button-hover-pink);
+}
+
+.products-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6.5em;
+    margin: 10.3em auto;
+    max-width: 80%;
+}
+
+
+.product-box {
+    width: 80%;
+    max-width: 20em;
+    padding: 6.6em 3.5em;
+    border: 0.7em solid rgb(255, 255, 255);
+    border-radius: 1.4em;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    outline: 0.12em solid rgba(0, 0, 0, 0.1);
+    outline-offset: -4px;
+    font-size: 0.83em;
+    transition: transform 0.32s ease-in-out, box-shadow 0.5s;
+    cursor: pointer;
+}
+
+.product-box h2 {
+    margin: 0em;
+}
+
+.product-box:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+}
+
+.coming-soon {
+    font-size: 1.5em;
+    color: var(--secondary-purple);
+    margin-top: 3.5em
+}
+
+
+#product-box-1 { background-color: var(--video-game-color); }
+#product-box-2 { background-color: var(--mattress-color); }
+#product-box-3 { background-color: var(--restaurant-color); }
+#product-box-4 { background-color: var(--shampoo-color); }
+#product-box-5 { background-color: var(--book-color); }
+
+
+#product-box-1:hover {
+    background-color: var(--video-game-hover-color);
+}
+#product-box-2:hover {
+    background-color: var(--mattress-hover-color);
+}
+#product-box-3:hover {
+    background-color: var(--restaurant-hover-color);
+}
+#product-box-4:hover {
+    background-color: var(--shampoo-hover-color);
+}
+#product-box-5:hover {
+    background-color: var(--book-hover-color);
+}

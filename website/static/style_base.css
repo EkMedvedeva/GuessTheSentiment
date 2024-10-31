@@ -8,13 +8,27 @@
     --rules-button-hover-orange: rgb(225, 139, 25);
     --back-button-pink: rgb(254, 170, 170);
     --back-button-hover-pink: rgb(235, 120, 120);
-    --rule_box-color-1: rgb(216, 228, 224, 0.6);
-    --rule_box-color-2: rgb(212, 198, 246, 0.5);
-    --rule_box-color-3: rgb(245, 224, 215, 0.6);
-    --rule_box-color-4: rgb(192, 217, 245, 0.5);
-    --rule_box-color-5: rgb(252, 232, 186, 0.5);
-    --rule_box-color-6: rgb(255, 207, 207, 0.5);
-    --rule_box-color-7: rgb(194, 232, 229, 0.5);
+    --exit-button: rgb(240, 128, 128);
+    --exit-button-hover: rgb(233, 94, 94);
+    --continue-button: rgb(185, 240, 185);
+    --continue-button-hover: rgb(150, 220, 150);
+    --rule-box-color-1: rgba(216, 228, 224, 0.6);
+    --rule-box-color-2: rgba(212, 198, 246, 0.5);
+    --rule-box-color-3: rgba(245, 224, 215, 0.6);
+    --rule-box-color-4: rgba(192, 217, 245, 0.5);
+    --rule-box-color-5: rgba(252, 232, 186, 0.5);
+    --rule-box-color-6: rgba(255, 207, 207, 0.5);
+    --rule-box-color-7: rgba(194, 232, 229, 0.5);
+    --video-game-color: rgb(192, 217, 245);
+    --mattress-color: rgb(246, 229, 222);
+    --restaurant-color: rgb(246, 250, 198);
+    --shampoo-color: rgb(232, 225, 250);
+    --book-color: rgb(216, 228, 224);
+    --video-game-hover-color: rgb(162, 197, 225);
+    --mattress-hover-color: rgb(226, 207, 204);
+    --restaurant-hover-color: rgb(226, 237, 158);
+    --shampoo-hover-color: rgb(202, 197, 238);
+    --book-hover-color: rgb(186, 198, 197);
 }
 
 body {
@@ -73,6 +87,5 @@ p {
     font-size: 1.5em;
     margin: 1.25em;
     transition: background-color 0.3s ease;
-    box-shadow: 0 4px 6px rgb(0, 0, 0, 0.14);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.14);
 }
-
