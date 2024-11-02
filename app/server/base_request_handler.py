@@ -45,8 +45,12 @@ class MyBaseRequestHandler(BaseHTTPRequestHandler):
         self.wfile.write(chunk_data)
         self.wfile.flush()
 
+    def _send_image(self, data):
+        self._send_response('image/jpeg', data)
+
     def _send_error(self, data, code):
         encoded_data = json.dumps(data).encode()
+        print(f'Sending error code {code}, data:\n{data}')
         self._send_response('application/json', encoded_data, code=code)
     
     def _receive_json(self):

@@ -1,0 +1,117 @@
+
+#title-container {
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 1.1em 3em;
+    z-index: 100;
+}
+
+#title-message {
+    font-size: 2.6em;
+    color: var(--primary-blue);
+    margin: 0em;
+}
+
+#buttons-container .button {
+    padding: 0.5em 1.5em;
+    margin: 0.75em;
+}
+
+#back-button {
+    background-color: var(--back-button-pink);
+}
+
+#start-guessing-button {
+    background-color: var(--play-button-blue);
+}
+
+#back-button:hover {
+    background-color: var(--back-button-hover-pink);
+}
+
+#start-guessing-button:hover {
+    background-color: var(--play-button-hover-blue);
+}
+
+
+.product-description-container {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 12em;
+    margin-top: 6em;
+    max-width: 90%;
+    padding: 2em;
+}
+
+.image-container {
+    width: 40%;
+}
+
+#product-image {
+    width: 95%;
+    max-width: 400px;
+    border-radius: 0.5em;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.product-description-box {
+    width: 45%;
+    max-width: 55em;
+    padding: 3em 5em;
+    background-color: white;
+    border-radius: 1.6em;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    outline: 0.12em solid rgba(0, 0, 0, 0.1);
+    outline-offset: -4px;
+    font-size: 0.75em;
+}
+
+.product-description-box p {
+    text-align: left;
+}
+
+#product-title-box {
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 1em 5em;
+    border-radius: 0.4em;
+    font-size: 1.5em;
+    font-weight: bold;
+    color: var(--secondary-purple);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+
+#product-description-box-1 { border: 1.1em solid var(--video-game-color); }
+
+
+#product-type-link p {
+    text-align: left;
+    font-size: 1.2em;
+    font-weight: bold;
+    padding: 0.1em 0.2em;
+}
+
+#product-type {
+    color: rgb(255, 120, 93);
+}
+
+.active-link {
+    color: rgb(113, 108, 172);
+}
+
+.active-link:hover {
+    color: rgb(82, 76, 132);
+}
+.chevron {
+    font-size: 1.5em;
+    margin-left: 0.2em;
+}
