@@ -35,7 +35,7 @@ class MyHTTPServer(ThreadingHTTPServer):
 
 
 def run():
-    port = 8080
+    port = 80
     server_address = ('', port)
     httpd = MyHTTPServer(server_address)
     print(f'Server running on port {port}...')

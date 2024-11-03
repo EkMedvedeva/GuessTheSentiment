@@ -12,11 +12,15 @@ class InternalError(Exception):
 
 class MyBaseRequestHandler(BaseHTTPRequestHandler):
 
-    def _send_response(self, content_type, data, code=HTTPStatus.OK):
+    def _send_response(self, content_type, data, code=HTTPStatus.OK, location=None):
         self.send_response(code)
-        self.send_header('Content-type', content_type)
+        if content_type is not None:
+            self.send_header('Content-type', content_type)
+        if location is not None:
+            self.send_header('Location', location)
         self.end_headers()
-        self.wfile.write(data)
+        if data is not None:
+            self.wfile.write(data)
 
     def _send_html(self, data):
         self._send_response('text/html', data)
@@ -52,6 +56,9 @@ class MyBaseRequestHandler(BaseHTTPRequestHandler):
         encoded_data = json.dumps(data).encode()
         print(f'Sending error code {code}, data:\n{data}')
         self._send_response('application/json', encoded_data, code=code)
+
+    def _send_redirect(self, location):
+        self._send_response(None, None, code=HTTPStatus.MOVED_PERMANENTLY, location=location)
     
     def _receive_json(self):
         content_length = int(self.headers['Content-Length'])
@@ -74,6 +81,12 @@ class MyBaseRequestHandler(BaseHTTPRequestHandler):
     def base_request_handle(self):
         try:
 
+            host = self.headers.get('Host')
+            if host is not None and host.startswith('www.'):
+                location = f'http://{host[4:]}{self.path}'
+                self._send_redirect(location)
+                return
+            
             full_path = (self.command, self.path)
             self.request_handle(full_path)
             
