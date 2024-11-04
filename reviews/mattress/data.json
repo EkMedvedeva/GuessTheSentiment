@@ -1,5 +1,8 @@
 {
-    "product": {
+    "database": {
+        "category": "mattress"
+    },
+    "description": {
         "name": "Novilla Queen Mattress",
         "category": "Memory Foam Mattress (Type: Medium Firm; Size: Queen 12 Inch)",
         "link": "https://www.amazon.com/Novilla-Mattress-Pressure-Removable-Washable/dp/B0CJJBP3RM",

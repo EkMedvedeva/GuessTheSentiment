@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guess The Sentiment</title>
+    <link rel="stylesheet" href="/style_base.css">
+    <link rel="stylesheet" href="/style_review.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap">
+    <script src="/script_review.js" defer></script>
+</head>
+<body class="orange">
+    <div id="title-container">
+        <h1 id="title-message">Guess The Sentiment:</h1>
+        <div id="buttons-container">
+            <a id="exit-button" href="/" class="button">Exit</a>
+        </div>
+    </div>
+    <div class="review-container">
+        <div class="navigation-buttons-container">
+            <button id="skip-button" class="button action-button">Skip<span class="continue-chevron">&#8250;</span></button>
+        </div>
+        <div id="review-box">
+            <img id="review-image" alt="Review Image">
+            <p id="review-text"></p>
+        </div>
+        <div id="rating-container">
+            <button class="rating-button" data-rating="0">0</button>
+            <button class="rating-button" data-rating="1">1</button>
+            <button class="rating-button" data-rating="2">2</button>
+            <button class="rating-button" data-rating="3">3</button>
+            <button class="rating-button" data-rating="4">4</button>
+            <button class="rating-button" data-rating="5">5</button>
+            <button class="rating-button" data-rating="6">6</button>
+            <button class="rating-button" data-rating="7">7</button>
+            <button class="rating-button" data-rating="8">8</button>
+            <button class="rating-button" data-rating="9">9</button>
+            <button class="rating-button" data-rating="10">10</button>
+        </div>
+        <div class="rating-buttons-container">
+            <button id="rate-button" class="button action-button">Rate!</button>
+        </div>
+    </div>
+</body>
+</html>

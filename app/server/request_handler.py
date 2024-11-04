@@ -9,20 +9,31 @@ from helpers import command_helper
 class ReviewLoader:
 
     def __init__(self):
+        self.product_categories = {}
         self.products = {}
         self.images = {}
         for product_name in ('mattress', 'no_mans_sky'):
             
             with open(f'reviews/{product_name}/data.json', 'r') as file:
                 product_data = json.loads(file.read())
+            product_data['description']['image'] = f'/product-images/{product_name}'
+            
+            category = product_data['database']['category']
             self.products[product_name] = product_data
+            # If the category doesn't exist yet, create the category with an empty list
+            if category not in self.product_categories:
+                self.product_categories[category] = []
+            self.product_categories[category].append(product_name)
             
             with open(f'reviews/{product_name}/image.jpg', 'rb') as file:
                 image = file.read()
             self.images[product_name] = image
 
-    def get_random_review(self):
-        return random.choice(self.reviews)
+    def get_random_product(self, category):
+        return random.choice(self.product_categories[category])
+    
+    def get_random_review(self, product_name):
+        return random.choice(self.products[product_name]['reviews'])
 
 
 class MyRequestHandler(MyBaseRequestHandler):
@@ -44,8 +55,13 @@ class MyRequestHandler(MyBaseRequestHandler):
                 data = file.read()
             self._send_html(data)
         
-        elif full_path[0] == 'GET' and full_path[1].startswith('/products/'):
+        elif full_path[0] == 'GET' and full_path[1] in ('/video-game', '/mattress'):
             with open('website/static/product_description.html', 'rb') as file:
+                data = file.read()
+            self._send_html(data)
+        
+        elif full_path[0] == 'GET' and full_path[1] in ('/video-game/guess', '/mattress/guess'):
+            with open('website/static/review.html', 'rb') as file:
                 data = file.read()
             self._send_html(data)
         
@@ -74,6 +90,11 @@ class MyRequestHandler(MyBaseRequestHandler):
                 data = file.read()
             self._send_css(data)
         
+        elif full_path == ('GET', '/style_review.css'):
+            with open('website/static/style_review.css', 'rb') as file:
+                data = file.read()
+            self._send_css(data)
+        
         elif full_path == ('GET', '/script.js'):
             with open('website/static/script.js', 'rb') as file:
                 data = file.read()
@@ -84,31 +105,37 @@ class MyRequestHandler(MyBaseRequestHandler):
                 data = file.read()
             self._send_js(data)
         
-##        elif full_path == ('GET', '/review'):
-##            review = review_loader.get_random_review()
-##            review_rating = review['rating']
-##            review_title = review['title']
-##            review_text = review['review']
-##            data = {
-##                'product': review_loader.product['name'],
-##                'product_description': review_loader.product['description'],
-##                'review': f'Rating: {review_rating}/5\nTitle: {review_title}\nComment: {review_text}'
-##            }
-##            self._send_json(data)
-        
-        elif full_path[0] == 'GET' and full_path[1].startswith('/product-descriptions/'):
-            product_name = full_path[1].split('/', maxsplit=2)[2].replace('-', '_')
-            if product_name not in review_loader.products:
-                raise InvalidRequestData(f"Unknown product '{product_name}'")
-            product_data = review_loader.products[product_name]['product']
-            self._send_json(product_data)
+        elif full_path == ('GET', '/script_review.js'):
+            with open('website/static/script_review.js', 'rb') as file:
+                data = file.read()
+            self._send_js(data)
+            
+        elif full_path == ('GET', '/product-description'):
+            data = self._receive_json()
+            try:
+                category_name = data['category'].replace('-', '_')
+                product_name = review_loader.get_random_product(category_name)
+            except Exception as e:
+                raise InvalidRequestData('"category" needs to be a valid category name')
+            product_description = review_loader.products[product_name]['description']
+            self._send_json(product_description)
         
         elif full_path[0] == 'GET' and full_path[1].startswith('/product-images/'):
             product_name = full_path[1].split('/', maxsplit=2)[2].replace('-', '_')
             if product_name not in review_loader.products:
-                raise InvalidRequestData(f"Unknown product '{product_name}'")
+                raise InvalidRequestData(f'Unknown product "{product_name}"')
             image = review_loader.images[product_name]
             self._send_image(image)
+        
+        elif full_path == ('GET', '/review'):
+            data = self._receive_json()
+            try:
+                category_name = data['category'].replace('-', '_')
+                product_name = review_loader.get_random_product(category_name)
+                review = review_loader.get_random_review(product_name)
+            except Exception as e:
+                raise InvalidRequestData('"category" needs to be a valid category name')
+            self._send_json(review)
         
         elif full_path == ('GET', '/admin/check-update'):
             data = []
@@ -136,7 +163,7 @@ class MyRequestHandler(MyBaseRequestHandler):
             data = command_result.asdict()
             self._send_chunked_json(data)
 
-            for i in range(10):
+            for i in range(2):
                 time.sleep(2)
                 self._send_chunked_json({'test': str(i)})
             
@@ -150,6 +177,12 @@ class MyRequestHandler(MyBaseRequestHandler):
             except Exception as e:
                 raise InvalidRequestData('rating needs to be an integer')
             self._send_json({})
+
+        elif full_path == ('GET', '/favicon.ico'):
+            pass
+
+        else:
+            print(f'Unhandled method and path:\n{full_path}')
 
 
 review_loader = ReviewLoader()

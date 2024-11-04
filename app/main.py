@@ -1,23 +1,29 @@
 import sys
 
 
-def get_command():
-    if len(sys.argv) != 2:
-        return None
-    command = sys.argv[1]
-    if command not in ('server', 'deploy'):
-        return None
-    return command
+def main():
 
-command = get_command()
+    try:
+        
+        command = sys.argv[1]
+        options = sys.argv[2:]
+        
+        if command == 'server':
+            local = '--local' in options
+            from server import server
+            server.run(local)
+            return
+        
+        if command == 'deploy':
+            from deployment import deployment_manager
+            deployment_manager.run()
+            return
+        
+        raise Exception('Invalid arguments.\nUsage: python app/main.py <server|deploy>')
+        
+    except Exception as error:
+        print(error)
 
-if command is None:
-    print('Invalid arguments.\nUsage: python app/main.py <server|deploy>')
 
-elif command == 'server':
-    from server import server
-    server.run()
+main()
 
-elif command == 'deploy':
-    from deployment import deployment_manager
-    deployment_manager.run()

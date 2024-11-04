@@ -1,6 +1,7 @@
 from http.server import BaseHTTPRequestHandler
 from http import HTTPStatus
 import json
+import urllib.parse
 
 
 class InvalidRequestData(Exception):
@@ -61,6 +62,16 @@ class MyBaseRequestHandler(BaseHTTPRequestHandler):
         self._send_response(None, None, code=HTTPStatus.MOVED_PERMANENTLY, location=location)
     
     def _receive_json(self):
+        if self.command == 'GET':
+            # Special case for GET requests, there is no body
+            # Convert the query string into a dictionary instead
+            query = self.parse_result.query
+            query_data = urllib.parse.parse_qs(query)
+            for key in query_data:
+                if len(query_data[key]) > 1:
+                    raise InvalidRequestData('Invalid query')
+                query_data[key] = query_data[key][0]
+            return query_data
         content_length = int(self.headers['Content-Length'])
         encoded_data = self.rfile.read(content_length)
         try:
@@ -68,7 +79,7 @@ class MyBaseRequestHandler(BaseHTTPRequestHandler):
         except json.JSONDecodeError as error:
             raise InvalidRequestData('Invalid JSON')
         return data
-
+    
     def do_GET(self):
         self.base_request_handle()
 
@@ -87,7 +98,8 @@ class MyBaseRequestHandler(BaseHTTPRequestHandler):
                 self._send_redirect(location)
                 return
             
-            full_path = (self.command, self.path)
+            self.parse_result = urllib.parse.urlparse(self.path)
+            full_path = (self.command, self.parse_result.path)
             self.request_handle(full_path)
             
         except InvalidRequestData as error:

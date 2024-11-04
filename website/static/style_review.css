@@ -1,0 +1,142 @@
+
+#title-container {
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+    position: sticky;
+    top: 0;
+    width: 100%;
+    padding: 1.1em 3em;
+    z-index: 100;
+}
+
+#title-message {
+    font-size: 2.6em;
+    color: var(--primary-blue);
+    margin: 0em;
+}
+
+#buttons-container .button {
+    padding: 0.5em 1.5em;
+    margin: 0.75em;
+}
+
+#exit-button {
+    background-color: var(--exit-button);
+}
+
+#exit-button:hover {
+    background-color: var(--exit-button-hover);
+}
+
+.review-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 4em;
+    padding-bottom: 3em;
+}
+
+.review-container div {
+    margin-bottom: 1em;
+}
+
+.navigation-buttons-container {
+    width: 90%;
+    max-width: 53em;
+    box-sizing: border-box;
+}
+
+#skip-button {
+    font-size: 0.95em;
+    background-color: var(--continue-button);
+    margin-left: 75%;
+    padding: 0.5em 1.8em;
+}
+#skip-button:hover { background-color: var(--continue-button-hover); }
+
+#review-box {
+    width: 90%;
+    max-width: 58.5em;
+    box-sizing: border-box;
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2.1em 2.2em;
+    margin-bottom: 2em;
+    
+    background-color: var(--video-game-color);
+    border: 0.7em solid rgb(255, 255, 255);
+    border-radius: 1.7em;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    outline: 0.12em solid rgba(0, 0, 0, 0.1);
+    outline-offset: -4px;
+    
+    font-size: 0.89em;
+}
+
+#review-image {
+    align-self: flex-start;
+    width: 110px;
+    height: auto;
+    border-radius: 0.5em;
+}
+
+#review-text {
+    color: black;
+    margin: 1.5em;
+}
+
+#rating-container {
+    display: inline-flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 2em;
+}
+
+.rating-button {
+    font-size: 1.45em;
+    font-weight: bold;
+    color: white;
+    background-color: var(--play-button-blue);
+    border: 2px solid rgb(29, 24, 94);
+    border-radius: 0.4em;
+    transition: background-color 0.3s, color 0.3s;
+    cursor: pointer;
+    margin: 0em;
+    padding: 0.6em 1.5em;
+}
+
+.rating-button:hover {
+    background-color: var(--rules-button-orange);
+}
+
+.rating-button.selected {
+    background-color: var(--rules-button-orange);
+}
+
+.action-button {
+    font-size: 1.43em;
+    font-weight: bold;
+    color: rgb(38, 38, 38);
+    border: 2px solid rgb(174, 174, 174);
+    border-radius: 0.5em;
+    transition: background-color 0.3s;
+    cursor: pointer;
+    padding: 0.7em 2.1em;
+    margin: 0em;
+}
+
+.continue-chevron {
+    font-weight: bold;
+    font-size: 1.1em;
+    margin-left: 0.2em;
+}
+
+#rate-button { background-color: rgb(236, 253, 181); }
+#rate-button:hover { background-color: rgb(184, 233, 134); }

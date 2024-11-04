@@ -1,7 +1,7 @@
 from http.server import ThreadingHTTPServer
 from http import HTTPStatus
 import importlib
-import ssl
+from ssl import SSLContext
 
 from server.base_request_handler import MyBaseRequestHandler, InvalidRequestData, InternalError
 from helpers import command_helper
@@ -27,15 +27,16 @@ class DeploymentRequestHandler(MyBaseRequestHandler):
 
 class MyHTTPServer(ThreadingHTTPServer):
 
-    def __init__(self, server_address):
+    def __init__(self, server_address, use_ssl=True):
         self.request_handler_module = importlib.import_module('server.request_handler')
         ThreadingHTTPServer.__init__(self, server_address, self.request_handler_module.MyRequestHandler)
-        self.socket = ssl.wrap_socket(
-            self.socket,
-            certfile=CERT_FILE_PATH,
-            keyfile=KEY_FILE_PATH,
-            server_side=True
-        )
+        if use_ssl:
+            self.ssl_context = SSLContext()
+            self.ssl_context.load_cert_chain(CERT_FILE_PATH, keyfile=KEY_FILE_PATH)
+            self.socket = self.ssl_context.wrap_socket(
+                self.socket,
+                server_side=True
+            )
 
     def deployment_start(self):
         self.RequestHandlerClass = DeploymentRequestHandler
@@ -45,10 +46,15 @@ class MyHTTPServer(ThreadingHTTPServer):
         self.RequestHandlerClass = self.request_handler_module.MyRequestHandler
 
 
-def run():
-    port = 443
+def run(local):
+    if local:
+        port = 80
+        use_ssl = False
+    else:
+        port = 443
+        use_ssl = True
     server_address = ('', port)
-    httpd = MyHTTPServer(server_address)
+    httpd = MyHTTPServer(server_address, use_ssl=use_ssl)
     print(f'Server running on port {port}...')
     httpd.serve_forever()
 
