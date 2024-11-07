@@ -1,20 +1,33 @@
+
+body { background-color: var(--background-orange); }
+
 #title-message {
     margin-top: 3em;
 }
 
-#rules-button {
-    background-color: var(--rules-button-orange);
+#subtitle-message {
+    font-size: var(--text-size-bigger);
 }
 
-#play-button {
-    background-color: var(--play-button-blue);
+#home-navigation-container {
+    margin-top: 3em;
+    display: inline-flex;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
-#rules-button:hover {
-    background-color: var(--rules-button-hover-orange);
+#home-navigation-container .button {
+    margin: 1em;
+    padding: var(--button-padding-big);
+    
+    color: white;
+    font-size: var(--text-size-bigger);
+    font-weight: normal;
+    border: none;
 }
 
-#play-button:hover {
-    background-color: var(--play-button-hover-blue);
-}
+#rules-button { background-color: var(--rules-button-orange); }
+#rules-button:hover { background-color: var(--rules-button-hover-orange); }
 
+#play-button { background-color: var(--play-button-blue); }
+#play-button:hover { background-color: var(--play-button-hover-blue); }

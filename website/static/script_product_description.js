@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     
-    const playButton = document.getElementById('start-guessing-button');
+    const playButton = document.getElementById('navigation-start');
     playButton.href = window.location.pathname + '/guess';
     
     const productTitleBox = document.getElementById('product-title-box');

@@ -1,4 +1,44 @@
 :root {
+    --background-orange: rgb(255, 249, 243);
+    --background-purple: rgb(248, 246, 255);
+    
+    --exit-color: rgb(240, 128, 128);
+    --exit-color-hover: rgb(233, 94, 94);
+    
+    --continue-color: rgb(217, 217, 217);
+    --continue-color-hover: rgb(190, 190, 190);
+    
+    --button-dark: rgb(38, 38, 38);
+    
+    --border-color-default: rgb(174, 174, 174);
+    --border-color-dark: rgb(29, 24, 94);
+    
+    --text-margin-small: 0.35em;
+    
+    --button-padding-smallest: 0.5em 1.0em;
+    --button-padding-small: 0.5em 1.7em;
+    --button-padding-normal: 0.7em 2.1em;
+    --button-padding-big: 0.85em 2.9em;
+    
+    --box-padding-small: 1.4em 1.0em;
+    --box-padding-normal: 2.2em 3.0em;
+    /*--box-padding-long: 5.0em 3.0em;*/
+    
+    --border-width-normal: 0.7em;
+    --border-width-big: 1.0em;
+    
+    --text-size-small: 0.95em;
+    --text-size-smaller: 1.2em;
+    --text-size-normal: 1.4em;
+    --text-size-bigger: 1.6em;
+    --text-size-big: 2.6em;
+    --text-size-biggest: 3.0em;
+    
+    --border-radius-small: 0.4em;
+    --border-radius-normal: 0.5em;
+    --border-radius-bigger: 0.9em;
+    --border-radius-big: 1.3em;
+    
     --primary-purple: rgb(23, 19, 74);
     --secondary-purple: rgb(62, 59, 105);
     --primary-blue: rgb(51, 23, 201);
@@ -8,10 +48,6 @@
     --rules-button-hover-orange: rgb(225, 139, 25);
     --back-button-pink: rgb(254, 170, 170);
     --back-button-hover-pink: rgb(235, 120, 120);
-    --exit-button: rgb(240, 128, 128);
-    --exit-button-hover: rgb(233, 94, 94);
-    --continue-button: rgb(217, 217, 217);
-    --continue-button-hover: rgb(190, 190, 190);
     --rule-box-color-1: rgba(216, 228, 224, 0.6);
     --rule-box-color-2: rgba(212, 198, 246, 0.5);
     --rule-box-color-3: rgba(245, 224, 215, 0.6);
@@ -37,55 +73,129 @@ body {
     margin: 0em;
 }
 
-body.orange {
-    background-color: rgb(255, 249, 243);
-}
-
-body.purple {
-    background-color: rgb(248, 246, 255);
-}
-
 input, textarea, button {
     font-family: inherit;
 }
 
-h1 {
-    font-size: 3em;
-    font-weight: bold;
+h1, h2, h3, h4, h5, h6, p {
+    margin: var(--text-margin-small);
     text-align: center;
-    color: var(--primary-purple);
-    margin-bottom: 0.27em;
 }
 
-h2 {
-    font-size: 2em;
+h1, h2, h3, h4, h5, h6 {
     font-weight: bold;
+    font-size: var(--text-size-bigger);
     color: var(--primary-purple);
-    margin-top: 1em;
-    margin-bottom: 0.4em;
+}
+
+h1 {
+    font-size: var(--text-size-biggest);
 }
 
 p {
-    font-size: 1.51em;
     font-weight: normal;
-    text-align: center;
+    font-size: var(--text-size-normal);
     color: var(--secondary-purple);
-    margin: 0.5em;
-}
-
-.title-game {
-    color: var(--primary-blue);
 }
 
 .button {
-    background-color: rgb(0, 0, 0);
-    color: white;
-    padding: 1.05em 3.33em;
-    border: none;
-    border-radius: 9px;
-    cursor: pointer;
-    font-size: 1.5em;
     margin: 1.25em;
-    transition: background-color 0.3s ease;
+    
+    font-size: var(--text-size-bigger);
+    color: white;
+    background-color: rgb(0, 0, 0);
+    border: none;
+    border-radius: var(--border-radius-normal);
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.14);
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+}
+
+.continue-chevron {
+    margin-left: 0.2em;
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+.box {
+    padding: var(--box-padding-normal);
+    
+    display: flex;
+    flex-direction: column;
+    
+    border-width: var(--border-width-normal);
+    border-style: solid;
+    border-radius: var(--border-radius-big);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    outline-width: 0.12em;
+    outline-style: solid;
+    outline-offset: -4px;
+    
+    transition: transform 0.25s ease-in-out, box-shadow 0.5s;
+}
+
+.title-box {
+    padding: var(--box-padding-small);
+    
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: var(--border-radius-normal);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.title-box h2 {
+    margin: 0em;
+    color: var(--secondary-purple);
+}
+
+.title {
+    color: var(--primary-blue);
+}
+
+#navigation-container {
+    position: sticky;
+    z-index: 100;
+    padding: 1.1em 3em;
+    
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#navigation-container > .title {
+    margin: 0em;
+    font-size: var(--text-size-big);
+}
+
+#navigation-buttons {
+    display: inline-flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+#navigation-buttons .button {
+    padding: var(--button-padding-small);
+    margin: 0.1em 0.4em;
+}
+
+#main-container {
+    padding: 2em 5%;
+}
+
+#main-container > div {
+    margin: 1em 0em;
+}
+
+#main-container .button {
+    margin: 0em;
+    padding: var(--button-padding-normal);
+    
+    font-size: var(--text-size-normal);
+    font-weight: bold;
+    color: var(--button-dark);
+    border-width: 2px;
+    border-style: solid;
+    border-color: var(--border-color-default);
 }

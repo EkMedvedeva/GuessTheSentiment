@@ -8,30 +8,44 @@
     <link rel="stylesheet" href="/style_products.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap">
 </head>
-<body class="purple">
-    <div id="title-container">
-        <h1 id="title-message">Pick a Product Category:</h1>
-        <div id="buttons-container">
-            <a id="back-button" href="/" class="button">Back</a>
+<body>
+    <div id="navigation-container">
+        <h1 id="navigation-title" class="title">Pick a Product Category:</h1>
+        <div id="navigation-buttons">
+            <a id="navigation-back" class="button" href="/">Back</a>
         </div>
     </div>
-    <div class="products-container">
-        <a class="product-box" id="product-box-1" href="/video-game">
-            <h2 class="products-title">Video game</h2>
-        </a>
-        <a class="product-box" id="product-box-2" href="/mattress">
-            <h2 class="products-title">Mattress</h2>
-        </a>
-        <a class="product-box" id="product-box-3">
-            <h2 class="product-title">Restaurant</h2>
-        </a>
-        <a class="product-box" id="product-box-4">
-            <h2 class="product-title">Shampoo</h2>
-        </a>
-        <a class="product-box" id="product-box-5">
-            <h2 class="product-title">Book</h2>
-        </a>
-        <h2 class="coming-soon">New products<br>are coming soon!</h2>
+    <div id="main-container">
+        <div id="selection-container">
+            <a href="/video-game">
+                <div id="product-box-1" class="box">
+                    <h2>Video game</h2>
+                </div>
+            </a>
+            <a href="/mattress">
+                <div id="product-box-2" class="box">
+                    <h2>Mattress</h2>
+                </div>
+            </a>
+            <a>
+                <div id="product-box-3" class="box">
+                    <h2>Restaurant</h2>
+                </div>
+            </a>
+            <a>
+                <div id="product-box-4" class="box">
+                    <h2>Shampoo</h2>
+                </div>
+            </a>
+            <a>
+                <div id="product-box-5" class="box">
+                    <h2>Book</h2>
+                </div>
+            </a>
+            <div id="coming-soon">
+                <h2>New products<br>are coming soon!</h2>
+            </div>
+        </div>
     </div>
 </body>
 </html>

@@ -9,25 +9,27 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap">
     <script src="/script_product_description.js" defer></script>
 </head>
-<body class="orange">
-    <div id="title-container">
-        <h1 id="title-message">Product Description:</h1>
-        <div id="buttons-container">
-            <a id="back-button" href="/products" class="button">Back</a>
-            <a id="start-guessing-button" class="button">Start guessing! <span class="chevron">&#8250;</span></a>
+<body>
+    <div id="navigation-container">
+        <h1 id="navigation-title" class="title">Product Description:</h1>
+        <div id="navigation-buttons">
+            <a id="navigation-back" class="button" href="/products">Back</a>
+            <a id="navigation-start" class="button">Start guessing! <span class="continue-chevron">&#8250;</span></a>
         </div>
     </div>
-    <div class="product-description-container">
-        <div class="image-container">
-            <div id="product-title-box"/></div>
+    <div id="main-container">
+        <div id="image-container">
+            <div class="title-box">
+                <h2 id="product-title-box"></h2>
+            </div>
             <br>
             <img id="product-image">
             <div id="product-type-link">
                 <p>Type: <span id="product-type"></span></p>
-                <p>Link: <a id="product-link" class="active-link"></a></p>
+                <p>Link: <a id="product-link"></a></p>
             </div>
         </div>
-        <div id="product-description-box-1" class="product-description-box">
+        <div id="product-description-box" class="box">
             <p id="product-description"></p>
         </div>
     </div>
