@@ -53,6 +53,9 @@ class MyBaseRequestHandler(BaseHTTPRequestHandler):
     def _send_image(self, data):
         self._send_response('image/jpeg', data)
 
+    def _send_svg(self, data):
+        self._send_response('image/svg+xml', data)
+
     def _send_error(self, data, code):
         encoded_data = json.dumps(data).encode()
         print(f'Sending error code {code}, data:\n{data}')

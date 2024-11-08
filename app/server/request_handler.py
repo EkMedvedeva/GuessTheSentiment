@@ -178,8 +178,10 @@ class MyRequestHandler(MyBaseRequestHandler):
                 raise InvalidRequestData('rating needs to be an integer')
             self._send_json({})
 
-        elif full_path == ('GET', '/favicon.ico'):
-            pass
+        elif full_path == ('GET', '/icon.svg'):
+            with open('website/static/icon.svg', 'rb') as file:
+                image = file.read()
+            self._send_svg(image)
 
         else:
             print(f'Unhandled method and path:\n{full_path}')
