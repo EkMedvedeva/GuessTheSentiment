@@ -5,7 +5,7 @@ import json
 import time
 from datetime import datetime, timezone
 
-from deployment import deployment_helper, deployment_scripts
+from deployment import deployment_scripts, deployment_helper
 
 
 class DeploymentManager:
@@ -82,6 +82,8 @@ class DeploymentManager:
         print('Overwritten')
 
     def version_to_string(self, version):
+        if version is None:
+            return ''
         major, minor = version
         return f'v{major}.{minor}'
 
@@ -92,16 +94,16 @@ class DeploymentManager:
     def execute_scripts(self):
         if self.version_history is None:
             self.version_history = []
-
+        
         current_time_str = str(datetime.fromtimestamp(self.current_time, tz=timezone.utc))
         
         for script in deployment_scripts.scripts_get(self.current_version):
             previous_version_name = self.version_to_string(script.previous_version)
             next_version_name = self.version_to_string(script.next_version)
             print(f'Executing the deployment script {previous_version_name} → {next_version_name}...')
-            deployment_scripts.log_clear()
+            deployment_helper.log_clear()
             script.function()
-            output = deployment_scripts.log_get()
+            output = deployment_helper.log_get()
             print(f'Execution done, output:\n{output}')
             
             deployment_log = {
@@ -120,3 +122,4 @@ class DeploymentManager:
 
 def run():
     deployment_manager = DeploymentManager()
+
