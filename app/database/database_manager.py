@@ -19,6 +19,27 @@ class DatabaseManager:
         self.cursor.execute(query)
         self.connection.commit()
     
+    def product_category_lookup_get(self):
+        query = (
+            'SELECT id, name '
+            'FROM ProductCategories'
+        )
+        self.cursor.execute(query)
+        rows = self.cursor.fetchall()
+        lookup = {name: product_category_id for product_category_id, name in rows}
+        return lookup
+    
+    def product_category_create(self, product_category_name):
+        query = (
+            'INSERT INTO ProductCategories(name) '
+            'VALUES (?) '
+            'RETURNING id'
+        )
+        self.cursor.execute(query, (product_category_name,))
+        product_category_id, = self.cursor.fetchone()
+        self.connection.commit()
+        return product_category_id
+    
     def product_lookup_get(self):
         query = (
             'SELECT id, name '
@@ -29,13 +50,13 @@ class DatabaseManager:
         lookup = {name: product_id for product_id, name in rows}
         return lookup
     
-    def product_create(self, product_name):
+    def product_create(self, product_name, product_category_id):
         query = (
-            'INSERT INTO Products(name) '
-            'VALUES (?) '
+            'INSERT INTO Products(category_id, name) '
+            'VALUES (?,?) '
             'RETURNING id'
         )
-        self.cursor.execute(query, (product_name,))
+        self.cursor.execute(query, (product_category_id, product_name,))
         product_id, = self.cursor.fetchone()
         self.connection.commit()
         return product_id
@@ -74,6 +95,39 @@ class DatabaseManager:
         )
         self.cursor.execute(query, (product_id, *positions))
         self.connection.commit()
+    
+    def scale_create(self, scale_name):
+        query = (
+            'INSERT INTO Scales(name) '
+            'VALUES (?) '
+            'RETURNING id'
+        )
+        self.cursor.execute(query, (scale_name,))
+        scale_id, = self.cursor.fetchone()
+        self.connection.commit()
+        return scale_id
+    
+    def metric_create(self, metric_name, question, scale_id):
+        query = (
+            'INSERT INTO Metrics(name, question, scale_id) '
+            'VALUES (?,?,?) '
+            'RETURNING id'
+        )
+        self.cursor.execute(query, (metric_name, question, scale_id))
+        metric_id, = self.cursor.fetchone()
+        self.connection.commit()
+        return metric_id
+    
+    def experiment_create(self, experiment_name, metric_id):
+        query = (
+            'INSERT INTO Experiments(name, metric_id) '
+            'VALUES (?,?) '
+            'RETURNING id'
+        )
+        self.cursor.execute(query, (experiment_name, metric_id,))
+        experiment_id, = self.cursor.fetchone()
+        self.connection.commit()
+        return experiment_id
     
     def close(self):
         self.cursor.close()

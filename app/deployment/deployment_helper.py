@@ -64,35 +64,48 @@ def deploy_products(database_manager):
     logger.info('Deploying products to the database...')
     # Get all existing product names in the database
     db_product_lookup = database_manager.product_lookup_get()
+    db_product_category_lookup = database_manager.product_category_lookup_get()
     
     for product_file in list_files(REVIEWS_PATH):
         if product_file.name != 'data.json':
             continue
+
+        # Load the product's data
         product_name = os.path.dirname(product_file.relative_path)
-        if product_name not in db_product_lookup:
-            # The product is not in the database
-            logger.info(f'Inserting the product "{product_name}" to the database...')
-            product_id = database_manager.product_create(product_name)
-            db_review_positions = []
-        else:
-            # Get all existing review positions in the database for this product id
-            product_id = db_product_lookup[product_name]
-            db_review_positions = database_manager.review_positions_get(product_id)
-        # Check how many reviews actually exist in the file
         with open(product_path_get(product_name), 'r') as file:
             text = file.read()
         product_data = json.loads(text)
+        
+        # Get the product category id, create it if not in the database
+        product_category_name = product_data['database']['category']
+        if product_category_name not in db_product_category_lookup:
+            logger.info(f'Inserting the product category "{product_category_name}" to the database...')
+            product_category_id = database_manager.product_category_create(product_category_name)
+            db_product_category_lookup[product_category_name] = product_category_id
+        else:
+            product_category_id = db_product_category_lookup[product_category_name]
+        
+        # Get the product id, create it if not in the database
+        # Also get all existing review positions in the database for this product id
+        if product_name not in db_product_lookup:
+            logger.info(f'Inserting the product "{product_name}" to the database...')
+            product_id = database_manager.product_create(product_name, product_category_id)
+            db_review_positions = []
+        else:
+            product_id = db_product_lookup[product_name]
+            db_review_positions = database_manager.review_positions_get(product_id)
+        
+        # Check how many reviews actually exist in the file, and which ones are missing from the database
         review_count = len(product_data['reviews'])
-        # Check which review positions in the file are missing in the database
         missing_review_positions = [
             review_position
             for review_position in range(review_count)
             if review_position not in db_review_positions
         ]
+        
         # Insert the missing review positions in the database
         if len(missing_review_positions) == 0:
             continue
         logger.info(f'Inserting {len(missing_review_positions)} reviews to the product "{product_name}" (id={product_id})...')
         database_manager.reviews_create(product_id, missing_review_positions)
-
 
