@@ -1,6 +1,20 @@
 
 body { background-color: var(--background-orange); }
 
+#user-container {
+    display: flex;
+    justify-content: flex-end;
+}
+
+#user-container h1 {
+    font-size: var(--text-size-normal);
+}
+
+#user-name {
+    font-style: italic;
+    background-color: rgba(255, 255, 255, 0.8);
+}
+
 #title-message {
     margin-top: 3em;
 }

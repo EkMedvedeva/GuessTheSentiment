@@ -55,7 +55,7 @@ class DeploymentManager:
     def overwrite(self):
         print('Overwriting source to current...')
         
-        folders = ('app', 'website', 'reviews')
+        folders = ('app', 'website', 'reviews', 'misc')
         for folder in folders:
             source_path = deployment_helper.path_join(deployment_helper.SOURCE_PATH, folder)
             current_path = deployment_helper.path_join(deployment_helper.CURRENT_PATH, folder)

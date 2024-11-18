@@ -84,6 +84,10 @@ def deploy_v1_0():
         'last_connection_time INTEGER NOT NULL'
         ')'
     )
+    database_manager.create(
+        'CREATE INDEX idx_users_name '
+        'ON Users(name)'
+    )
     
     database_manager.create(
         'CREATE TABLE Sessions('
@@ -91,11 +95,15 @@ def deploy_v1_0():
         'user_id INTEGER NOT NULL,'
         'metric_id INTEGER NOT NULL,'
         'product_id INTEGER NOT NULL,'
-        'time INTEGER NOT NULL,'
+        'creation_time INTEGER NOT NULL,'
         'FOREIGN KEY (user_id) REFERENCES Users(id),'
         'FOREIGN KEY (metric_id) REFERENCES Metrics(id),'
         'FOREIGN KEY (product_id) REFERENCES Products(id)'
         ')'
+    )
+    database_manager.create(
+        'CREATE INDEX idx_sessions_user_id '
+        'ON Sessions(user_id)'
     )
     
     database_manager.create(
