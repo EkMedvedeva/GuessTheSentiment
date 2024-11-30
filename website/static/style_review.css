@@ -70,4 +70,5 @@ body { background-color: var(--background-orange); }
 
 #guess-button { background-color: rgb(236, 253, 181); }
 #guess-button:hover { background-color: rgb(184, 233, 134); }
+#guess-button.disabled { background-color: var(--button-color-light-gray); }
 

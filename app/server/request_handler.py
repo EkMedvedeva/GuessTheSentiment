@@ -293,13 +293,35 @@ class MyRequestHandler(MyBaseRequestHandler):
             data = {'question': question, 'reviews': reviews}
             self._send_json(data)
         
-        # elif full_path == ('PUT', '/rate'):
-            # data = self._receive_json()
-            # try:
-                # rating = int(data['rating'])
-            # except Exception as e:
-                # raise InvalidRequestData('"rating" needs to be an integer')
-            # self._send_json({})
+        elif full_path == ('PUT', '/review/rate'):
+            data = self._receive_json()
+            try:
+                connection_hash = int(data['connectionHash'])
+                connection = review_loader.active_connections[connection_hash]
+                user_id = connection.user_id
+                session = review_loader.active_sessions[user_id]
+            except Exception as error:
+                raise InvalidRequestData('"connectionHash" needs to be a valid connection hash')
+            try:
+                rating = int(data['rating'])
+                if rating not in range(11):
+                    raise Exception()
+            except Exception as e:
+                raise InvalidRequestData('"rating" needs to be a valid integer')
+            try:
+                index = int(data['index'])
+                review_id = session.review_ids[index]
+            except Exception as e:
+                raise InvalidRequestData('"index" needs to be a valid integer')
+            try:
+                duration_ms = int(1000*data['duration'])
+                if duration_ms < 0:
+                    raise Exception()
+            except Exception as e:
+                raise InvalidRequestData('"duration" needs to be a valid duration')
+            database_manager.guess_create(session.session_id, review_id, rating, duration_ms)
+            
+            self._send_json({})
 
         elif full_path == ('GET', '/favicon.ico'):
             with open('website/static/icon.svg', 'rb') as file:

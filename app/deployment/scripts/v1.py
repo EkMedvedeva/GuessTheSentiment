@@ -123,7 +123,7 @@ def deploy_v1_0():
         'id INTEGER PRIMARY KEY AUTOINCREMENT,'
         'session_id INTEGER NOT NULL,'
         'review_id INTEGER NOT NULL,'
-        'scale_value INTEGER NOT NULL,'
+        'rating INTEGER NOT NULL,'
         'duration_ms INTEGER NOT NULL,'
         'FOREIGN KEY (session_id) REFERENCES Sessions(id),'
         'FOREIGN KEY (review_id) REFERENCES Reviews(id)'

@@ -267,6 +267,18 @@ class DatabaseManager:
         self.connection.commit()
         return session_id
     
+    @locked
+    def guess_create(self, session_id, review_id, rating, duration_ms):
+        query = (
+            'INSERT INTO Guesses(session_id, review_id, rating, duration_ms) '
+            'VALUES (?,?,?,?) '
+            'RETURNING id'
+        )
+        self.cursor.execute(query, (session_id, review_id, rating, duration_ms))
+        guess_id, = self.cursor.fetchone()
+        self.connection.commit()
+        return guess_id
+    
     def close(self):
         self.cursor.close()
         self.connection.close()
