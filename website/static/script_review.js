@@ -1,8 +1,10 @@
 document.addEventListener('DOMContentLoaded', async () => {
     
     const reviewImage = document.getElementById('review-image');
+    const reviewTitle = document.getElementById('review-title');
     const reviewText = document.getElementById('review-text');
     const reviewSkip = document.getElementById('review-skip');
+    const ratingQuestion = document.getElementById('rating-question');
     
     const categoryName = window.location.pathname.split('/')[1];
     const userName = localStorage.getItem('userName');
@@ -10,6 +12,23 @@ document.addEventListener('DOMContentLoaded', async () => {
     let reviewIndex = 0;
     let question;
     let reviews;
+    
+    function reviewUpdate() {
+        reviewText.innerText = reviews[reviewIndex].review;
+        let split = reviews[reviewIndex].rating.split('/');
+        if (split.length == 2) {
+            reviewImage.src = `/stars_${split[0]}_${split[1]}.svg`;
+        } else {
+            reviewImage.removeAttribute('src');
+        }
+        if (reviews[reviewIndex].title != null) {
+            console.log(reviews[reviewIndex].title);
+            reviewTitle.innerText = reviews[reviewIndex].title;
+            reviewTitle.style.display = 'block';
+        } else {
+            reviewTitle.style.display = 'none';
+        }
+    }
     
     try {
         var url = '/reviews?' + new URLSearchParams({
@@ -24,19 +43,21 @@ document.addEventListener('DOMContentLoaded', async () => {
         const reviewsData = await response.json();
         
         question = reviewsData.question;
-        reviews = reviewsData.reviews;
-        reviewText.innerText = reviews[0].review;
+        ratingQuestion.innerText = question;
         
-        console.log(question);
-        console.log(reviews);
+        reviews = reviewsData.reviews;
+        reviewIndex = 0;
+        reviewUpdate();
     } catch (error) {
         console.error(error);
         return;
     }
     
     reviewSkip.addEventListener('click', () => {
-        reviewIndex += 1;
-        reviewText.innerText = reviews[reviewIndex].review;
+        if (reviewIndex < reviews.length - 1) {
+            reviewIndex += 1;
+        }
+        reviewUpdate();
     });
     
 });

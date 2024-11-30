@@ -283,6 +283,31 @@ class MyRequestHandler(MyBaseRequestHandler):
                 image = file.read()
             self._send_svg(image)
 
+        elif full_path == ('GET', '/stars_1_5.svg'):
+            with open('website/static/stars_1_5.svg', 'rb') as file:
+                image = file.read()
+            self._send_svg(image)
+
+        elif full_path == ('GET', '/stars_2_5.svg'):
+            with open('website/static/stars_2_5.svg', 'rb') as file:
+                image = file.read()
+            self._send_svg(image)
+
+        elif full_path == ('GET', '/stars_3_5.svg'):
+            with open('website/static/stars_3_5.svg', 'rb') as file:
+                image = file.read()
+            self._send_svg(image)
+
+        elif full_path == ('GET', '/stars_4_5.svg'):
+            with open('website/static/stars_4_5.svg', 'rb') as file:
+                image = file.read()
+            self._send_svg(image)
+
+        elif full_path == ('GET', '/stars_5_5.svg'):
+            with open('website/static/stars_5_5.svg', 'rb') as file:
+                image = file.read()
+            self._send_svg(image)
+
         else:
             print(f'Unhandled method and path:\n{full_path}')
 

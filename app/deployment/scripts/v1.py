@@ -122,7 +122,7 @@ def deploy_v1_0():
     
     logger.info('Creating a generic nps experiment with a scale from 0 to 10...')
     scale_id = database_manager.scale_create('nps0-10')
-    nps_question = 'In your opinion, how likely is this reviewer to recommend this product to a friend or colleague?'
+    nps_question = 'In your opinion, how likely is this reviewer to recommend this product?'
     metric_id = database_manager.metric_create('nps0-10', nps_question, scale_id)
     experiment_id = database_manager.experiment_create('nps0-10', metric_id)
     
