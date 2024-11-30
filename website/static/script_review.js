@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const ratingQuestion = document.getElementById('rating-question');
     
     const categoryName = window.location.pathname.split('/')[1];
-    const userName = localStorage.getItem('userName');
+    const connection = JSON.parse(sessionStorage.getItem('connection'));
     
     let reviewIndex = 0;
     let question;
@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     
     try {
         var url = '/reviews?' + new URLSearchParams({
-            username: userName,
+            connectionHash: connection.hash,
         }).toString();
         let response = await fetch(url);
         

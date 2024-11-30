@@ -222,11 +222,11 @@ class DatabaseManager:
     @locked
     def user_create(self, user_name, creation_time):
         query = (
-            'INSERT INTO Users(name, creation_time, last_connection_time) '
-            'VALUES (?,?,?) '
+            'INSERT INTO Users(name, creation_time) '
+            'VALUES (?,?) '
             'RETURNING id'
         )
-        self.cursor.execute(query, (user_name, creation_time, creation_time))
+        self.cursor.execute(query, (user_name, creation_time))
         user_id, = self.cursor.fetchone()
         self.connection.commit()
         return user_id
@@ -242,6 +242,18 @@ class DatabaseManager:
         user_id, = self.cursor.fetchone()
         self.connection.commit()
         return user_id
+    
+    @locked
+    def connection_create(self, user_id, creation_time):
+        query = (
+            'INSERT INTO Connections(user_id, time) '
+            'VALUES (?,?) '
+            'RETURNING id'
+        )
+        self.cursor.execute(query, (user_id, creation_time))
+        connection_id, = self.cursor.fetchone()
+        self.connection.commit()
+        return connection_id
     
     @locked
     def session_create(self, user_id, metric_id, product_id, creation_time):

@@ -17,6 +17,10 @@ class Session:
     product_id: int
     review_ids: list[int]
 
+@dataclass
+class Connection:
+    user_id: int
+
 
 class UserNameHelper:
     
@@ -62,6 +66,7 @@ class ReviewLoader:
         self.experiments = database_manager.experiments_get()
         self.metrics = database_manager.metrics_get()
         self.active_sessions = {}
+        self.active_connections = {}
 
 
 class MyRequestHandler(MyBaseRequestHandler):
@@ -171,41 +176,57 @@ class MyRequestHandler(MyBaseRequestHandler):
             # self._send_chunked_json(None)
             # self.server.deployment_finalize()
         
-        elif full_path == ('POST', '/user/create'):
+        elif full_path == ('POST', '/connection/create'):
             data = self._receive_json()
             creation_time = int(time.time())
-            if data.get('random') is True:
+            user_name = data.get('username')
+            
+            if user_name is not None:
+                user_name = user_name_helper.sanitize(user_name)
+                try:
+                    user_id = database_manager.user_id_get(user_name)
+                except Exception as error:
+                    user_id = None
+
+            if user_id is None:
                 # Generate a random user name which doesn't exist yet and add it to the database
                 for _ in range(100):
                     user_name = user_name_helper.generate_random()
                     try:
-                        database_manager.user_create(user_name, creation_time)
+                        user_id = database_manager.user_create(user_name, creation_time)
                         break
                     except Exception as error:
-                        user_name = None
-                if user_name is None:
-                    raise InternalError()
-            else:
-                try:
-                    user_name = user_name_helper.sanitize(data['username'])
-                except Exception as error:
-                    raise InvalidRequestData('"username" needs to be a valid user name')
-                try:
-                    database_manager.user_create(user_name, creation_time)
-                except Exception as error:
-                    raise InvalidRequestData('A user with this name already exists')
+                        pass
             
-            data = {'username': user_name}
+            if user_id is None:
+                raise InternalError()
+
+            connection_id = database_manager.connection_create(user_id, creation_time)
+            # Generate a random hash that doesn't exist yet
+            for _ in range(100):
+                connection_hash = random.getrandbits(30)
+                if connection_hash not in review_loader.active_connections:
+                    break
+                connection_hash = None
+            
+            if connection_hash is None:
+                raise InternalError()
+
+            connection = Connection(user_id=user_id)
+            review_loader.active_connections[connection_hash] = connection
+            
+            data = {'username': user_name, 'hash': connection_hash}
             self._send_json(data)
         
         elif full_path == ('POST', '/session/create'):
             data = self._receive_json()
             creation_time = int(time.time())
             try:
-                user_name = user_name_helper.sanitize(data['username'])
-                user_id = database_manager.user_id_get(user_name)
+                connection_hash = int(data['connectionHash'])
+                connection = review_loader.active_connections[connection_hash]
+                user_id = connection.user_id
             except Exception as error:
-                raise InvalidRequestData('"username" needs to be a valid user name')
+                raise InvalidRequestData('"connectionHash" needs to be a valid connection hash')
             try:
                 category_name = data['category'].replace('-', '_')
                 category_id = review_loader.product_category_lookup[category_name]
@@ -256,11 +277,12 @@ class MyRequestHandler(MyBaseRequestHandler):
         elif full_path == ('GET', '/reviews'):
             data = self._receive_json()
             try:
-                user_name = user_name_helper.sanitize(data['username'])
-                user_id = database_manager.user_id_get(user_name)
+                connection_hash = int(data['connectionHash'])
+                connection = review_loader.active_connections[connection_hash]
+                user_id = connection.user_id
                 session = review_loader.active_sessions[user_id]
             except Exception as error:
-                raise InvalidRequestData('"username" needs to be a valid user name')
+                raise InvalidRequestData('"connectionHash" needs to be a valid connection hash')
             reviews = []
             for review_id in session.review_ids:
                 product_id, position = review_loader.reviews[review_id]

@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const productDescription = document.getElementById('product-description');
     
     const categoryName = window.location.pathname.split('/')[1];
-    const userName = localStorage.getItem('userName');
+    const connection = JSON.parse(sessionStorage.getItem('connection'));
     
     try {
         let response = await fetch('/session/create', {
@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                username: userName,
+                connectionHash: connection.hash,
                 category: categoryName
             })
         });

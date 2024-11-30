@@ -80,13 +80,25 @@ def deploy_v1_0():
         'CREATE TABLE Users('
         'id INTEGER PRIMARY KEY AUTOINCREMENT,'
         'name TEXT NOT NULL UNIQUE,'
-        'creation_time INTEGER NOT NULL,'
-        'last_connection_time INTEGER NOT NULL'
+        'creation_time INTEGER NOT NULL'
         ')'
     )
     database_manager.create(
         'CREATE INDEX idx_users_name '
         'ON Users(name)'
+    )
+    
+    database_manager.create(
+        'CREATE TABLE Connections('
+        'id INTEGER PRIMARY KEY AUTOINCREMENT,'
+        'user_id INTEGER NOT NULL,'
+        'time INTEGER NOT NULL,'
+        'FOREIGN KEY (user_id) REFERENCES Users(id)'
+        ')'
+    )
+    database_manager.create(
+        'CREATE INDEX idx_connections_user_id '
+        'ON Connections(user_id, time DESC)'
     )
     
     database_manager.create(
