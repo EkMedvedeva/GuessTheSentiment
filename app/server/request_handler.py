@@ -180,13 +180,14 @@ class MyRequestHandler(MyBaseRequestHandler):
             data = self._receive_json()
             creation_time = int(time.time())
             user_name = data.get('username')
+            user_id = None
             
             if user_name is not None:
                 user_name = user_name_helper.sanitize(user_name)
                 try:
                     user_id = database_manager.user_id_get(user_name)
                 except Exception as error:
-                    user_id = None
+                    pass
 
             if user_id is None:
                 # Generate a random user name which doesn't exist yet and add it to the database
@@ -300,7 +301,7 @@ class MyRequestHandler(MyBaseRequestHandler):
                 # raise InvalidRequestData('"rating" needs to be an integer')
             # self._send_json({})
 
-        elif full_path == ('GET', '/icon.svg'):
+        elif full_path == ('GET', '/favicon.ico'):
             with open('website/static/icon.svg', 'rb') as file:
                 image = file.read()
             self._send_svg(image)
