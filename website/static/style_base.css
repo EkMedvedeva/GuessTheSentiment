@@ -9,6 +9,11 @@
     --continue-color: rgb(217, 217, 217);
     --continue-color-hover: rgb(190, 190, 190);
     
+    --button-color-light-blue: rgb(153, 132, 183);
+    --button-color-light-purple: rgb(164, 170, 238);
+    --button-color-light-blue-hover: rgb(138, 119, 164);
+    --button-color-light-purple-hover: rgb(144, 148, 208);
+    
     --button-dark: rgb(38, 38, 38);
     
     --border-color-default: rgb(174, 174, 174);
@@ -97,6 +102,10 @@ p {
     font-weight: normal;
     font-size: var(--text-size-normal);
     color: var(--secondary-purple);
+}
+
+a {
+    text-decoration: none;
 }
 
 .button {

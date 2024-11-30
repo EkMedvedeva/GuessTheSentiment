@@ -8,6 +8,9 @@ from server.base_request_handler import MyBaseRequestHandler, InvalidRequestData
 from helpers import command_helper
 
 
+SESSION_REVIEW_COUNT = 20
+
+
 @dataclass
 class Session:
     session_id: int
@@ -98,6 +101,11 @@ class MyRequestHandler(MyBaseRequestHandler):
                 data = file.read()
             self._send_html(data)
         
+        elif full_path == ('GET', '/thankyou'):
+            with open('website/static/thankyou.html', 'rb') as file:
+                data = file.read()
+            self._send_html(data)
+        
         elif full_path == ('GET', '/style_base.css'):
             with open('website/static/style_base.css', 'rb') as file:
                 data = file.read()
@@ -128,6 +136,11 @@ class MyRequestHandler(MyBaseRequestHandler):
                 data = file.read()
             self._send_css(data)
         
+        elif full_path == ('GET', '/style_thankyou.css'):
+            with open('website/static/style_thankyou.css', 'rb') as file:
+                data = file.read()
+            self._send_css(data)
+            
         elif full_path == ('GET', '/script_home.js'):
             with open('website/static/script_home.js', 'rb') as file:
                 data = file.read()
@@ -237,7 +250,7 @@ class MyRequestHandler(MyBaseRequestHandler):
             unguessed_reviews = database_manager.unguessed_reviews_get(user_id, category_id)
             product_id = max(unguessed_reviews, key=lambda product_id: len(unguessed_reviews[product_id]))
             # Randomly get some unguessed reviews from that product
-            review_ids = random.sample(unguessed_reviews[product_id], 10)
+            review_ids = random.sample(unguessed_reviews[product_id], SESSION_REVIEW_COUNT)
             # Get a random experiment and its metric
             experiment_id, metric_id = random.choice(list(review_loader.experiments.items()))
             # Create the session in the database

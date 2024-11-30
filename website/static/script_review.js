@@ -70,8 +70,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     function reviewNavigate() {
         if (reviewIndex < reviews.length - 1) {
             reviewIndex += 1;
+            reviewUpdate();
+        } else {
+            window.location.href = '/thankyou';
         }
-        reviewUpdate();
     }
     
     reviewSkip.addEventListener('click', () => {

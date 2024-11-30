@@ -1,0 +1,33 @@
+
+body { background-color: var(--background-purple); }
+
+#title-message {
+    margin-top: 3em;
+}
+
+#subtitle-message {
+    font-size: var(--text-size-bigger);
+}
+
+#home-navigation-container {
+    margin-top: 3em;
+    display: inline-flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+#home-navigation-container .button {
+    margin: 1em;
+    padding: var(--button-padding-big);
+    
+    color: white;
+    font-size: var(--text-size-bigger);
+    font-weight: normal;
+    border: none;
+}
+
+#home-button { background-color: var(--button-color-light-purple); }
+#home-button:hover { background-color: var(--button-color-light-purple-hover); }
+
+#play-button { background-color: var(--button-color-light-blue); }
+#play-button:hover { background-color: var(--button-color-light-blue-hover); }
