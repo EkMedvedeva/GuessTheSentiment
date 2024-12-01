@@ -91,12 +91,12 @@ class MyRequestHandler(MyBaseRequestHandler):
                 data = file.read()
             self._send_html(data)
         
-        elif full_path[0] == 'GET' and full_path[1] in ('/video-game', '/mattress'):
+        elif full_path[0] == 'GET' and full_path[1] in ('/video-game', '/mattress', '/restaurant'):
             with open('website/static/product_description.html', 'rb') as file:
                 data = file.read()
             self._send_html(data)
         
-        elif full_path[0] == 'GET' and full_path[1] in ('/video-game/guess', '/mattress/guess'):
+        elif full_path[0] == 'GET' and full_path[1] in ('/video-game/guess', '/mattress/guess', '/restaurant/guess'):
             with open('website/static/review.html', 'rb') as file:
                 data = file.read()
             self._send_html(data)

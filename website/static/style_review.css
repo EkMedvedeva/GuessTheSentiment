@@ -30,7 +30,6 @@ body { background-color: var(--background-orange); }
 #review-image {
     max-width: 150px;
     max-height: 40px;
-    height: auto;
     object-fit: contain;
     object-position: left;
     border-radius: 0.3em;
