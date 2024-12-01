@@ -52,11 +52,23 @@ document.addEventListener('DOMContentLoaded', async () => {
         ratingButtonsUpdate(null);
         
         reviewText.innerText = reviews[reviewIndex].review;
-        let split = reviews[reviewIndex].rating.split('/');
-        if (split.length == 2) {
-            reviewImage.src = `/stars_${split[0]}_${split[1]}.svg`;
-        } else {
+        let imageSource = null;
+        if (reviews[reviewIndex].hasOwnProperty('rating')) {
+            let split = reviews[reviewIndex].rating.split('/');
+            imageSource = `/stars_${split[0]}_${split[1]}.svg`;
+        } else if (reviews[reviewIndex].hasOwnProperty('recommended')) {
+            let recommended = reviews[reviewIndex].recommended;
+            if (recommended) {
+                imageSource = '/thumb_up.svg';
+            } else {
+                imageSource = '/thumb_down.svg';
+            }
+        }
+        
+        if (imageSource === null) {
             reviewImage.removeAttribute('src');
+        } else {
+            reviewImage.src = imageSource;
         }
         if (reviews[reviewIndex].title != null) {
             reviewTitle.innerText = reviews[reviewIndex].title;

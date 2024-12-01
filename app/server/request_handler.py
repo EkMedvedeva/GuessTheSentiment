@@ -366,6 +366,16 @@ class MyRequestHandler(MyBaseRequestHandler):
                 image = file.read()
             self._send_svg(image)
 
+        elif full_path == ('GET', '/thumb_up.svg'):
+            with open('website/static/thumb_up.svg', 'rb') as file:
+                image = file.read()
+            self._send_svg(image)
+
+        elif full_path == ('GET', '/thumb_down.svg'):
+            with open('website/static/thumb_down.svg', 'rb') as file:
+                image = file.read()
+            self._send_svg(image)
+
         else:
             print(f'Unhandled method and path:\n{full_path}')
 
