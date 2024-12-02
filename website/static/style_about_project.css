@@ -1,0 +1,50 @@
+
+body { background-color: var(--background-purple); }
+
+#navigation-back { background-color: var(--back-button-pink); }
+#navigation-back:hover { background-color: var(--back-button-hover-pink); }
+
+#navigation-play { background-color: var(--play-button-blue); }
+#navigation-play:hover { background-color: var(--play-button-hover-blue); }
+
+#main-container .box {
+    width: 100%;
+    max-width: 80em;
+    box-sizing: border-box;
+    border-width: var(--border-width-big);
+    background-color: white;
+    outline-color: rgba(0, 0, 0, 0.1);
+    font-size: 0.81em;
+}
+
+#main-container .box p {
+    text-align: justify;
+    line-height: 1.44em;
+}
+
+#main-container .box br {
+    display: block;
+    margin-top: 0.5em;
+}
+
+#about-navigation-container {
+    margin-top: 2.2em;
+}
+
+#about-navigation-container .button {
+    margin: 1em;
+    padding: var(--button-padding-small);
+    
+    color: white;
+    font-size: var(--text-size-normal);
+    font-weight: normal;
+    border: none;
+}
+
+#about-box-1 { border-color: var(--rule-box-color-1); }
+#about-box-2 { border-color: var(--rule-box-color-2); }
+#about-box-3 { border-color: var(--rule-box-color-3); }
+#about-box-4 { border-color: var(--rule-box-color-4); }
+
+#about-author-button { background-color: var(--button-color-light-purple); }
+#about-author-button:hover { background-color: var(--button-color-light-purple-hover); }

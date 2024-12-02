@@ -20,7 +20,7 @@ body { background-color: var(--background-purple); }
 
 #main-container .box {
     width: 80%;
-    max-width: 44em;
+    max-width: 50em;
     box-sizing: border-box;
     border-width: var(--border-width-big);
     background-color: white;

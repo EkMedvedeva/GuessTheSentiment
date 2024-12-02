@@ -8,7 +8,7 @@ body { background-color: var(--background-orange); }
 #navigation-start:hover { background-color: var(--play-button-hover-blue); }
 
 #main-container {
-    display: flex;
+    flex-direction: row;
     align-items: flex-start;
     justify-content: space-between;
 }

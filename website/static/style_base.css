@@ -9,17 +9,17 @@
     --continue-color: rgb(217, 217, 217);
     --continue-color-hover: rgb(190, 190, 190);
     
-    --button-color-light-blue: rgb(153, 132, 183);
-    --button-color-light-purple: rgb(164, 170, 238);
-    --button-color-light-blue-hover: rgb(138, 119, 164);
-    --button-color-light-purple-hover: rgb(144, 148, 208);
+    --button-color-light-purple: rgb(153, 132, 183);
+    --button-color-light-blue: rgb(164, 170, 238);
+    --button-color-light-purple-hover: rgb(138, 119, 164);
+    --button-color-light-blue-hover: rgb(144, 148, 208);
     
     --button-dark: rgb(38, 38, 38);
     
     --border-color-default: rgb(174, 174, 174);
     --border-color-dark: rgb(29, 24, 94);
     
-    --text-margin-small: 0.35em;
+    --text-margin-small: 0.25em;
     
     --button-padding-smallest: 0.5em 1.0em;
     --button-padding-small: 0.5em 1.7em;
@@ -190,15 +190,19 @@ a {
     margin: 0.1em 0.4em;
 }
 
-#main-container {
+.container {
     padding: 2em 5%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0em;
 }
 
-#main-container > div {
+.container > div {
     margin: 1em 0em;
 }
 
-#main-container .button {
+.container .button {
     margin: 0em;
     padding: var(--button-padding-normal);
     

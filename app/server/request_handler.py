@@ -105,6 +105,11 @@ class MyRequestHandler(MyBaseRequestHandler):
             with open('website/static/thankyou.html', 'rb') as file:
                 data = file.read()
             self._send_html(data)
+
+        elif full_path == ('GET', '/about/project'):
+            with open('website/static/about_project.html', 'rb') as file:
+                data = file.read()
+            self._send_html(data)
         
         elif full_path == ('GET', '/style_base.css'):
             with open('website/static/style_base.css', 'rb') as file:
@@ -138,6 +143,11 @@ class MyRequestHandler(MyBaseRequestHandler):
         
         elif full_path == ('GET', '/style_thankyou.css'):
             with open('website/static/style_thankyou.css', 'rb') as file:
+                data = file.read()
+            self._send_css(data)
+
+        elif full_path == ('GET', '/style_about_project.css'):
+            with open('website/static/style_about_project.css', 'rb') as file:
                 data = file.read()
             self._send_css(data)
             
