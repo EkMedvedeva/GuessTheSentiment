@@ -6,6 +6,7 @@
         "name": "Le Petit Jardin (\"The Little Garden\")",
         "category": "Restaurant",
         "link": "https://www.petit-jardin.com/",
+        "linkActive": true,
         "description": "Le Petit Jardin, a Michelin-starred traditional fine dining restaurant in the center of Montpellier, offers a sophisticated menu that focuses on fresh, seasonal ingredients sourced from local producers. As its name (\"The Little Garden\") suggests, this restaurant has one of the prettiest terraces in the city, nestled in a lush, quiet garden. The cuisine blends traditional French techniques with subtle Mediterranean influences, creating a balance of authentic flavors and modern presentation. Each dish is meticulously prepared and artfully plated, reflecting the restaurant's dedication to culinary excellence. The menu changes frequently to highlight the best of the season, with dishes that range from delicate seafood to tender meats, all paired with an impressive selection of regional wines."
     },
     "reviews": [
