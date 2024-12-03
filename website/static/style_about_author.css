@@ -1,0 +1,118 @@
+
+body { background-color: rgb(220, 230, 242); }
+
+#navigation-container {
+    padding: 1.6em 3em;
+}
+
+#navigation-title {
+    flex-grow: 1;
+    color: var(--primary-purple);
+}
+
+#navigation-back { background-color: var(--back-button-pink); }
+#navigation-back:hover { background-color: var(--back-button-hover-pink); }
+
+#main-container {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-evenly;
+}
+
+#image-container {
+    width: 40%;
+    max-width: 24em;
+}
+
+#author-image {
+    width: 100%;
+    border-radius: 0.5em;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#description-container {
+    width: 50%;
+    max-width: 45em;
+    padding: 1.8em;
+    background-color: white;
+    border-radius: 0.4em;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#description-container h1 {
+    font-size: 1.69em;
+}
+
+#description-container li {
+    text-align: left;
+    padding: 0.4em;
+    font-size: 1.2em;
+}
+
+#description-container p {
+    font-weight: normal;
+    font-size: 1.2em;
+    color: black;
+}
+
+#subtitle-message {
+    margin-top: 0.8em;
+    padding: 0.8em;
+    background-color: rgba(192, 93, 93, 0.1);
+    border-radius: 8px;
+}
+
+.source-link {
+    color: rgb(90, 90, 173);
+    font-weight: bold;
+}
+
+.source-link:visited {
+    color: rgb(104, 147, 110);
+}
+
+.source-link:hover {
+    color: rgb(72, 72, 145);
+    text-decoration: underline;
+}
+
+.icon-button {
+    display: inline-flex;
+    align-items: center;
+    margin: 0.3em;
+    background-color: rgb(108, 108, 192);
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.icon-button:hover { background-color: rgb(86, 86, 153) }
+
+.icon-button img {
+    width: 2.5em;
+    height: auto;
+}
+
+#copy-button {
+    padding: 0.4em;
+    gap: 0.5em;
+}
+
+#copy-button img {
+    width: 1.8em;
+}
+
+#downloads-container {
+    display: inline-flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    column-gap: 2em;
+    margin-top: 0.8em;
+}
+
+#downloads-container .icon-button {
+    padding: 0.8em 2em;
+    gap: 1em;
+}

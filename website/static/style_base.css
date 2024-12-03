@@ -108,6 +108,15 @@ a {
     text-decoration: none;
 }
 
+ul {
+    list-style: none;
+    padding: 0em;
+}
+
+ul li {
+    margin-bottom: 0.53em;
+}
+
 .button {
     margin: 1.25em;
     
