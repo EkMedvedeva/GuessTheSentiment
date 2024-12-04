@@ -1,7 +1,5 @@
-document.addEventListener('DOMContentLoaded', async () => {
-    
-    const userNameSpan = document.getElementById('user-name');
-    
+
+async function connectionLoad() {
     let userName;
     let connection = sessionStorage.getItem('connection');
     
@@ -39,8 +37,17 @@ document.addEventListener('DOMContentLoaded', async () => {
     localStorage.setItem('userName', userName);
     sessionStorage.setItem('connection', JSON.stringify(connection));
     
-    if (userName != null) {
-        userNameSpan.innerText = userName;
+    return connection;
+}
+
+function usernameSet(username) {
+    const userNameSpan = document.getElementById('user-name');
+    if (userNameSpan != null) {
+        userNameSpan.innerText = username;
     }
-    
+}
+
+document.addEventListener('DOMContentLoaded', async () => {
+    let connection = await connectionLoad();
+    usernameSet(connection.username);
 });

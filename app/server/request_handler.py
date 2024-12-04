@@ -161,8 +161,8 @@ class MyRequestHandler(MyBaseRequestHandler):
                 data = file.read()
             self._send_css(data)
             
-        elif full_path == ('GET', '/script_home.js'):
-            with open('website/static/script_home.js', 'rb') as file:
+        elif full_path == ('GET', '/script_base.js'):
+            with open('website/static/script_base.js', 'rb') as file:
                 data = file.read()
             self._send_js(data)
         
