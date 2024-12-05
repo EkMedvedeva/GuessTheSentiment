@@ -1,6 +1,6 @@
 # GuessTheSentiment 🎯
 
-Welcome to **GuessTheSentiment** – a fun and interactive web-based game that challenges users to estimate how likely a reviewer is to recommend a product based on their written review! 
+Welcome to [**GuessTheSentiment**](https://guess-the-sentiment.com) – a fun and interactive web-based game that challenges users to estimate how likely a reviewer is to recommend a product based on their written review! 
 
 ## About the Project
 
@@ -15,11 +15,11 @@ The main goal of this project is to benchmark different sentiment analysis metho
 
 ## Purpose
 
-**GuessTheSentiment** was built to contribute to the community of developers and data scientists by providing an engaging tool to evaluate and compare different sentiment analysis models. By making the results interactive and transparent, this project helps others discover the best models and approaches for conducting sentiment analysis on various types of customer reviews. 
+[**GuessTheSentiment**](https://guess-the-sentiment.com) was built to contribute to the community of developers and data scientists by providing an engaging tool to evaluate and compare different sentiment analysis models. By making the results interactive and transparent, this project helps others discover the best models and approaches for conducting sentiment analysis on various types of customer reviews. 
 
 ## How to Play
 
-Visit the [GuessTheSentiment website](#) (link coming soon).
+The rules of the game are available on the page: https://guess-the-sentiment.com/rules
 
 ## Contributing
 
