@@ -111,10 +111,10 @@ class MyRequestHandler(MyBaseRequestHandler):
                 data = file.read()
             self._send_html(data)
 
-        elif full_path == ('GET', '/about/author'):
-            with open('website/static/about_author.html', 'rb') as file:
-                data = file.read()
-            self._send_html(data)
+        #elif full_path == ('GET', '/about/author'):
+        #    with open('website/static/about_author.html', 'rb') as file:
+        #        data = file.read()
+        #    self._send_html(data)
 
         elif full_path == ('GET', '/style_base.css'):
             with open('website/static/style_base.css', 'rb') as file:
@@ -156,10 +156,10 @@ class MyRequestHandler(MyBaseRequestHandler):
                 data = file.read()
             self._send_css(data)
 
-        elif full_path == ('GET', '/style_about_author.css'):
-            with open('website/static/style_about_author.css', 'rb') as file:
-                data = file.read()
-            self._send_css(data)
+        #elif full_path == ('GET', '/style_about_author.css'):
+        #    with open('website/static/style_about_author.css', 'rb') as file:
+        #        data = file.read()
+        #    self._send_css(data)
             
         elif full_path == ('GET', '/script_base.js'):
             with open('website/static/script_base.js', 'rb') as file:
@@ -396,30 +396,30 @@ class MyRequestHandler(MyBaseRequestHandler):
                 image = file.read()
             self._send_svg(image)
 
-        elif full_path == ('GET', '/copy_icon.svg'):
-            with open('website/static/copy_icon.svg', 'rb') as file:
-                image = file.read()
-            self._send_svg(image)
+        #elif full_path == ('GET', '/copy_icon.svg'):
+        #    with open('website/static/copy_icon.svg', 'rb') as file:
+        #        image = file.read()
+        #    self._send_svg(image)
 
-        elif full_path == ('GET', '/pdf_icon.svg'):
-            with open('website/static/pdf_icon.svg', 'rb') as file:
-                image = file.read()
-            self._send_svg(image)
+        #elif full_path == ('GET', '/pdf_icon.svg'):
+        #    with open('website/static/pdf_icon.svg', 'rb') as file:
+        #        image = file.read()
+        #    self._send_svg(image)
 
-        elif full_path == ('GET', '/author-image.jpg'):
-            with open('website/static/author_image.jpg', 'rb') as file:
-                image = file.read()
-            self._send_image(image)
+        #elif full_path == ('GET', '/author-image.jpg'):
+        #    with open('website/static/author_image.jpg', 'rb') as file:
+        #        image = file.read()
+        #    self._send_image(image)
 
-        elif full_path == ('GET', '/cv-english.pdf'):
-            with open('website/static/cv_english.pdf', 'rb') as file:
-                data = file.read()
-            self._send_pdf(data)
+        #elif full_path == ('GET', '/cv-english.pdf'):
+        #    with open('website/static/cv_english.pdf', 'rb') as file:
+        #        data = file.read()
+        #    self._send_pdf(data)
 
-        elif full_path == ('GET', '/cv-french.pdf'):
-            with open('website/static/cv_french.pdf', 'rb') as file:
-                data = file.read()
-            self._send_pdf(data)
+        #elif full_path == ('GET', '/cv-french.pdf'):
+        #    with open('website/static/cv_french.pdf', 'rb') as file:
+        #        data = file.read()
+        #    self._send_pdf(data)
 
         else:
             print(f'Unhandled method and path:\n{full_path}')

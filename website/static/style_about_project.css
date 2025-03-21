@@ -45,6 +45,3 @@ body { background-color: var(--background-purple); }
 #about-box-2 { border-color: var(--rule-box-color-2); }
 #about-box-3 { border-color: var(--rule-box-color-3); }
 #about-box-4 { border-color: var(--rule-box-color-4); }
-
-#about-author-button { background-color: var(--button-color-light-purple); }
-#about-author-button:hover { background-color: var(--button-color-light-purple-hover); }
